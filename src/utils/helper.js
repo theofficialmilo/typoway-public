@@ -56,3 +56,13 @@ const getHTMLPart = (arr) => {
   }
   return "";
 };
+
+
+export const requestDownload = (resp) => {
+  const element = document.createElement('a');
+  const file = new Blob([resp.dataHtml], {type: 'text/html'});
+  element.href = URL.createObjectURL(file);
+  element.download = `${resp.name} Email Template.html`;
+  document.body.appendChild(element);
+  element.click();
+}

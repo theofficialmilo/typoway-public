@@ -38,14 +38,14 @@ function App() {
   const initClient = useCallback(() => {
     window.gapi.client.init({
       apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-      clientId: REACT_APP_GOOGLE_CLIENT_ID,
+      clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
       scope: "https://www.googleapis.com/auth/gmail.modify",
       discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"]
     }).then(() => {
       window.gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
       updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get());
     }).catch((err) => {
-      dispatch(setAlertAction({ type: 'error', message: 'Something went wrong. Please try again.' }))
+      dispatch(setAlertAction({ type: 'error', message: err.details }))
     })
   }, [updateSigninStatus])
 
@@ -74,10 +74,14 @@ function App() {
             <Route exact path='/privacy-policy' component={Privacy} />
             <ProtectedRoute path='/' component={Home} />
           </Switch>
-          <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} open={alert.isOpen} autoHideDuration={3000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity={alert.type}>
-              <Typography variant='body1'>{alert.message}</Typography>
-            </Alert>
+          <Snackbar 
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} 
+            open={alert.isOpen} 
+            autoHideDuration={3000} 
+            onClose={handleClose}>
+              <Alert onClose={handleClose} severity={alert.type}>
+                <Typography variant='body1'>{alert.message}</Typography>
+              </Alert>
           </Snackbar>
         </Hidden>
         <Hidden mdUp implementation='css'>

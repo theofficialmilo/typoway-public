@@ -2,7 +2,7 @@ const initialState = {
   isLoading: false,
   alert: {
     isOpen: false,
-    type: '',
+    type: 'info',
     message: ''
   }
 }
@@ -33,7 +33,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
         alert: {
           isOpen: false,
-          type: '',
+          type: 'info',
           message: ''
         }
       }

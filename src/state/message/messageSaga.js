@@ -12,7 +12,6 @@ export function* handleGetMessages() {
     yield put(clearMessagesAction());
 
     const response = yield call(getMessages)
-
     // Send Id list to getMessagesData to get Message Data foreach Id
     yield put(getMessageDataAction(response));
   } catch (error) {

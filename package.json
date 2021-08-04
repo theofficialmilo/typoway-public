@@ -1,6 +1,6 @@
 {
 	"name": "typoway-public",
-	"version": "0.0.9",
+	"version": "0.9.1",
 	"main": "index.js",
 	"private": true,
 	"dependencies": {

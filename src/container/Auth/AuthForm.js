@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Paper, makeStyles, Typography, Button, Divider, CircularProgress, List, ListItem, ListSubheader } from '@material-ui/core'
+import { Paper, makeStyles, Typography, Button, Divider, CircularProgress, List, ListItem, ListSubheader, Link } from '@material-ui/core'
 
-import { Link } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 
 import LogoComp from '../../components/Logo'
 import googleLogo from '../../assets/googleLogo.png'
@@ -27,6 +27,12 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     backgroundColor: '#fafafa'
+  },
+  linkDiv: {
+    display: 'flex'
+  },
+  linkDivider: {
+    margin: '0 8px'
   }
 }))
 
@@ -90,8 +96,16 @@ const AuthForm = () => {
       </div>
       <div>
         <Divider variant='fullWidth' className={classes.divider} />
-        <Typography>Created by Millenno Kho</Typography>
-        <Link to='/privacy-policy'><Typography variant='body1' color='secondary'>Privacy Policy</Typography></Link>
+        <Typography variant='body1'>Created by Millenno Kho</Typography>
+        <div className={classes.linkDiv}>
+          <Link component={RouterLink} to='/privacy-policy' color="secondary" variant='overline'>
+            Privacy Policy
+          </Link>
+          <Divider className={classes.linkDivider} orientation="vertical" flexItem />
+          <Link href='https://github.com/theofficialmilo/typoway-public' color="secondary" variant='overline'>
+            GitHub Repo
+          </Link>
+        </div>
       </div>
     </Paper>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ListItem, Card, CardMedia, CardContent, Typography } from '@material-ui/core'
+import { ListItem, Card, CardContent, Typography } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import makeStyles from '@material-ui/styles/makeStyles'
 

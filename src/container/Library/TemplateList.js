@@ -7,7 +7,7 @@ import { OneTemplate, LoadingTemplate, EmptyList } from '../../components/Librar
 import { templateTypeData } from '../../utils/data';
 
 
-const TemplateList = ({ history, load, templates, onDelete }) => {
+const TemplateList = ({ history, load, templates, onMore }) => {
   const typeList = templateTypeData();
 
   return (
@@ -24,7 +24,7 @@ const TemplateList = ({ history, load, templates, onDelete }) => {
                 id={id}
                 name={data.name}
                 templateType={typeList[data.templateType]}
-                onDelete={onDelete}
+                onMore={onMore}
               />
             )
           }) :

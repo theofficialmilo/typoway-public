@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Card, CardHeader, CardContent, CardActions, Fab, makeStyles } from '@material-ui/core'
+import { Card, CardHeader, CardContent, CardActions, Fab, Menu, MenuItem, makeStyles, Typography } from '@material-ui/core'
 
 import { Add as AddIcon } from '@material-ui/icons'
 
@@ -12,9 +12,10 @@ import DialogConfirm from '../../components/DialogConfirmation'
 import { getListAction } from '../../state/template/templateDucks'
 import { setAlertAction } from '../../state/app/appDucks';
 
-import { deleteTemplate } from '../../service/templateServices';
+import { deleteTemplate, getTemplate } from '../../service/templateServices';
 
 import { dialogDeleteData } from '../../utils/data';
+import { requestDownload } from '../../utils/helper';
 
 const useStyles = makeStyles((theme) => ({
     fab: {
@@ -50,30 +51,50 @@ const useStyles = makeStyles((theme) => ({
 
 const Library = ({ history }) => {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
     const [selectedId, setSelectedId] = useState('');
+    const [anchorEl, setAnchorEl] = useState(false);
 
-    let userEmail = useSelector(state => state.user.user.email)
-    let template = useSelector((state) => state.template)
+    let userEmail = useSelector(state => state.user.user.email);
+    let template = useSelector((state) => state.template);
 
     useEffect(() => {
-        dispatch(getListAction(userEmail))
+        dispatch(getListAction(userEmail));
     }, [dispatch, userEmail])
 
-    const handleOnDelete = (id) => {
-        setSelectedId(id);
-        setIsOpen(true)
+    const handleOnMore = (e) => {
+      setAnchorEl(e.currentTarget);
+      setSelectedId(e.currentTarget.value);
     }
 
-    const handleOnClick = () => {
-        deleteTemplate(selectedId)
-            .then(data => {
-                dispatch(setAlertAction({ type: 'success', message: data }))
-                setIsOpen(false)
-                dispatch(getListAction(userEmail))
-            })
+    const handleMenuClose = () => {
+      setAnchorEl(false);
+      setSelectedId('');
+    }
+
+    const handleDelete = () => {
+      setAnchorEl(false);
+      setIsOpen(true);
+    }
+
+    const handleExport = () => {
+      getTemplate(selectedId)
+        .then(resp => {
+          requestDownload(resp);
+          handleMenuClose();
+        })
+    }
+
+    const handleOnConfirm = () => {
+      deleteTemplate(selectedId)
+        .then(data => {
+          setSelectedId('');
+          setIsOpen(false);
+          dispatch(setAlertAction({ type: 'success', message: data }));
+          dispatch(getListAction(userEmail));
+        })
     }
 
     const dialogConfirmationData = dialogDeleteData();
@@ -83,7 +104,7 @@ const Library = ({ history }) => {
             <Card className={classes.card}>
                 <CardHeader title={'Template List'} />
                 <CardContent className={classes.cardName}>
-                    <TemplateList history={history} onDelete={handleOnDelete} load={template.isLoading} templates={template.list} />
+                    <TemplateList history={history} onMore={handleOnMore} load={template.isLoading} templates={template.list} />
                 </CardContent>
                 <CardActions className={classes.cardActions}>
                     <Fab
@@ -98,7 +119,30 @@ const Library = ({ history }) => {
                     </Fab>
                 </CardActions>
             </Card>
-            <DialogConfirm isOpen={isOpen} data={dialogConfirmationData} handleCancel={() => setIsOpen(false)} handleClick={handleOnClick} />
+            <DialogConfirm isOpen={isOpen} data={dialogConfirmationData} handleCancel={() => setIsOpen(false)} handleClick={handleOnConfirm} />
+            <Menu
+              id='simple-menu'
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <MenuItem onClick={handleExport}>
+                <Typography color='secondary'>Export Template</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleDelete}>
+                <Typography color='error'>Delete</Typography>
+              </MenuItem>
+            </Menu>
         </>
     )
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Toolbar, AppBar, Typography, Button, Avatar, Popover, Card, CardContent, CardActions, makeStyles } from '@material-ui/core'
+import { Toolbar, AppBar, Typography, Button, Avatar, Popover, Card, CardContent, CardActions, Divider, makeStyles } from '@material-ui/core'
 
 import Logo from '../assets/logo.png'
 
@@ -24,13 +24,16 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center'
   },
   avatarsize: {
-    width: theme.spacing(5),
-    height: theme.spacing(5),
+    width: theme.spacing(12),
+    height: theme.spacing(12),
     left: '50%',
     transform: 'translateX(-50%)'
   },
   avatarCard: {
-    margin: 'auto'
+    margin: 'auto',
+    marginBottom: theme.spacing(2),
+    width: theme.spacing(8),
+    height: theme.spacing(8),
   },
   cardAction: {
     justifyContent: 'center'
@@ -70,7 +73,7 @@ export const Header = () => {
         </div>
         <div>
           <Button size='small' onClick={handleClick}>
-            <Avatar>{user.name.charAt(0)}</Avatar>
+            <Avatar alt={user.name} src={user.iconUrl}>{user.name.charAt(0)}</Avatar>
           </Button>
           <Popover
             id={id}
@@ -88,12 +91,15 @@ export const Header = () => {
           >
             <Card className={classes.cardRoot}>
               <CardContent>
-                <Avatar className={classes.avatarCard} />
-                <Typography variant='h6'>{user.name}</Typography>
-                <Typography variant='body2'>{user.email}</Typography>
+                <Avatar className={classes.avatarCard} alt={user.name} src={user.iconUrl}/>
+                <Typography variant='h6'><b>{user.name}</b></Typography>
+                <Typography variant='body2' color='secondary'>{user.email}</Typography>
               </CardContent>
               <CardActions className={classes.cardAction}>
-                <Button onClick={(e) => handleSignOut(e)}>
+                <Button disableElevation href='https://forms.gle/M3ZC3tHZhJZnpp9UA' target='_blank' variant='contained' fullWidth>
+                  Feedback
+                </Button>
+                <Button disableElevation onClick={(e) => handleSignOut(e)} color='primary' variant='contained' fullWidth>
                   Sign Out
                 </Button>
               </CardActions>

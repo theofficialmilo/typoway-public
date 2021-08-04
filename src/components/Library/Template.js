@@ -3,9 +3,8 @@ import React from 'react'
 import { Card, CardMedia, CardContent, CardActions, Typography, Button, Grid, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { DeleteOutlined } from '@material-ui/icons';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Skeleton from '@material-ui/lab/Skeleton'
-
 
 import Empty from '../../assets/drawing.png'
 
@@ -35,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const OneTemplate = ({ id, name, templateType, history, onDelete }) => {
+export const OneTemplate = ({ id, name, templateType, history, onMore }) => {
     const classes = useStyles();
 
     const handleOnUse = (e) => {
@@ -56,10 +55,9 @@ export const OneTemplate = ({ id, name, templateType, history, onDelete }) => {
         });
     }
 
-    const handleOnDelete = (e) => {
+    const handleOnMore = (e) => {
         e.preventDefault();
-        let templateId = e.currentTarget.value
-        onDelete(templateId)
+        onMore(e)
     }
 
     return (
@@ -80,8 +78,8 @@ export const OneTemplate = ({ id, name, templateType, history, onDelete }) => {
                     <Button size="small" color="secondary" onClick={e => handleOnEdit(e)} value={id}>
                         Edit
                     </Button>
-                    <IconButton className={classes.iconButton} onClick={e => handleOnDelete(e)} value={id}>
-                        <DeleteOutlined />
+                    <IconButton aria-controls="simple-menu" aria-haspopup="true" className={classes.iconButton} onClick={(e) => handleOnMore(e)} value={id}>
+                        <MoreVertIcon/>
                     </IconButton>
                 </CardActions>
             </Card>
@@ -93,7 +91,6 @@ export const LoadingTemplate = () => {
     const classes = useStyles();
 
     return (
-
         <Grid item md={3}>
             <Card className={classes.card} variant='outlined' >
                 <CardContent className={classes.cardContent}>
@@ -112,7 +109,7 @@ export const LoadingTemplate = () => {
                         <Skeleton width={50} />
                     </Button>
                     <IconButton className={classes.iconButton} disabled>
-                        <DeleteOutlined />
+                        <MoreVertIcon/>
                     </IconButton>
                 </CardActions>
             </Card>

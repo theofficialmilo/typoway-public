@@ -5,7 +5,8 @@ const initialState = {
   isAuth: false,
   user: {
     email: '',
-    name: ''
+    name: '',
+    iconUrl: ''
   }
 }
 

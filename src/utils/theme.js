@@ -2,6 +2,11 @@ import { createTheme } from '@material-ui/core/styles';
 
 export const CustomMuiTheme = createTheme({
   overrides: {
+    MuiPaper: {
+      rounded: {
+        borderRadius: '10px'
+      }
+    },
     MuiCard: {
       root: {
         background: 'rgba(255, 255, 255, 0.75)',

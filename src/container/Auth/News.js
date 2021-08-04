@@ -10,6 +10,9 @@ import { getNewsList } from '../../service/updatesServices'
 import { setAlertAction } from '../../state/app/appDucks'
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    height: '100%'
+  },
   actionArea: {
     padding: theme.spacing(2)
   },
@@ -38,7 +41,7 @@ const News = () => {
   }, [])
 
   return (
-    <Card >
+    <Card className={classes.root}>
       <CardHeader title={
         <Typography color='secondary' variant="h6" children="News & Update" />
       } />

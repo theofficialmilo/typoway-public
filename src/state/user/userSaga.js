@@ -16,7 +16,8 @@ export function* handleLogin({ payload }) {
     const userDetails = {
       name: firebaseResponse.user.displayName,
       email: firebaseResponse.user.email,
-      uid: firebaseResponse.user.uid
+      uid: firebaseResponse.user.uid,
+      iconUrl: firebaseResponse.user.photoURL
     }
 
     //Handles signup if first time user
@@ -27,6 +28,7 @@ export function* handleLogin({ payload }) {
     const user = {
       name: userDetails.name,
       email: userDetails.email,
+      iconUrl: userDetails.iconUrl
     }
 
     yield put(setUserAction(user))
@@ -35,8 +37,7 @@ export function* handleLogin({ payload }) {
     //yield login successful 
 
   } catch (error) {
-    yield put(setAlertAction({ type: 'error', message: 'Something went wrong. Please try again later' }))
-    //putError Message
+    yield put(setAlertAction({ type: 'error', message: JSON.parse(error.message).error.message }))
   }
 }
 
@@ -44,6 +45,7 @@ export function* handleLogout() {
   try {
     yield call(signOutFirebaseUser)
     yield put(clearUserAction())
+    yield put(setAlertAction({ type: 'info', message: 'You have been logged out!'}))
   } catch (error) {
     yield put(setAlertAction({ type: 'error', message: 'Something went wrong. Please try again later' }))
   }

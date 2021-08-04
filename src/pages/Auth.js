@@ -14,9 +14,9 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'cover'
   },
   newsDiv: {
-    height: 'fit-content',
     width: '75%',
-    margin: 'auto'
+    margin: 'auto',
+    height: '80%'
   }
 }))
 
@@ -24,7 +24,7 @@ const Auth = () => {
   const classes = useStyles();
 
   return (
-    <Grid container component="main" className={classes.root} >
+    <Grid container component="main" justifyContent="center"alignItems="stretch" className={classes.root} >
       <Grid item md={4}>
         <AuthForm />
       </Grid>
