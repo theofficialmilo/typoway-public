@@ -45,6 +45,9 @@ const useStyles = makeStyles(theme => ({
 		textAlign: 'center',
 		margin: theme.spacing(8)
 	},
+  nameButton: {
+    marginTop: theme.spacing(4)
+  }
 }))
 
 //Data Constants
@@ -70,8 +73,8 @@ const InfoDialog = ({ nameValue, templateTypeValue, designTypeValue, handleOnCha
 					onChange={handleOnChange}
 				>
 					{templateType.map((text, index) => (
-						<MenuItem key={text} id={index} value={index}>
-							{text}
+						<MenuItem key={text} id={index} value={index} >
+              {text}
 						</MenuItem>
 					))}
 				</Select>
@@ -135,11 +138,31 @@ const StartDesigningDialog = ({ handleOnLoad }) => {
 
 
 //Main Component for Dialog Component
-const DialogForm = ({ templateData, isOpen, handleOnChange, handleOnSubmit, handleOnClose }) => {
+export const DialogForm = ({isOpen, handleOnSubmit, handleOnClose }) => {
 	const classes = useStyles();
 
 	const [activeStep, setActiveStep] = useState(0);
+  const [formData,setFormData] = useState({
+    templateType: 0,
+    name: 'Untitle Template',
+    designType: 1,
+  })
+
 	const steps = stepsData();
+
+  const handleOnChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target
+    name !== 'name' ?
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: parseInt(value)
+      })) :
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+      }))
+  }
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep !== 2 ? prevActiveStep + 1 : prevActiveStep);
@@ -177,13 +200,13 @@ const DialogForm = ({ templateData, isOpen, handleOnChange, handleOnSubmit, hand
 						<form>
 							{activeStep === 0 &&
 								<InfoDialog
-									nameValue={templateData.name}
-									templateTypeValue={templateData.templateType}
-									designTypeValue={templateData.designType}
-									handleOnChange={handleOnChange}
+									nameValue={formData.name}
+									templateTypeValue={formData.templateType}
+									designTypeValue={formData.designType}
+									handleOnChange={(e) => handleOnChange(e)}
 								/>}
 							{activeStep < 1 &&
-								<Button variant='contained' color='primary' onClick={(e) => { handleOnSubmit(e); handleNext() }} fullWidth>
+								<Button variant='contained' color='primary' onClick={() => { handleOnSubmit(formData); handleNext() }} fullWidth>
 									Next
 								</Button>
 							}
@@ -199,6 +222,33 @@ const DialogForm = ({ templateData, isOpen, handleOnChange, handleOnSubmit, hand
 			</DialogContent>
 		</Dialog>
 	)
+}
+
+export const NameDialog = ({isOpen, handleOnSubmit}) => {
+  const classes = useStyles();
+  const [name, setName] = useState('Untitle Template');
+
+  return (
+    <Dialog open={isOpen}>
+      <DialogTitle disableTypography>
+				<Typography variant='h6' color='secondary'>Save Template</Typography>
+			</DialogTitle>
+      <DialogContent>
+        <FormControl variant="outlined" size='small' fullWidth>
+				  <FormLabel component='legend' color='secondary' htmlFor="name">Template Name</FormLabel>
+				  <OutlinedInput
+					  id="name"
+					  name="name"
+					  value={name}
+					  onChange={e => setName(e.target.value)}
+				  />
+			  </FormControl>
+        <Button variant='contained' color='primary' className={classes.nameButton} onClick={() => handleOnSubmit(name)} fullWidth>
+          Save into Library!
+				</Button>
+      </DialogContent>
+    </Dialog>
+  )
 }
 
 export default DialogForm

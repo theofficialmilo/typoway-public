@@ -57,7 +57,7 @@ const Editor = ({ loading, templateData, handleOpenConfirmation, handleOnSave, h
   }
 
   return (
-    <Paper className={classes.mainPaper}>
+    <Paper className={classes.mainPaper} elevation={2}>
       <Header
         loading={loading}
         handleBack={checkDesign}

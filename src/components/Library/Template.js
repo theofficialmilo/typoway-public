@@ -51,7 +51,9 @@ export const OneTemplate = ({ id, name, templateType, history, onMore }) => {
         let templateId = e.currentTarget.value
         history.push({
             pathname: '/library/editor',
-            state: templateId
+            state: {
+              template: templateId
+            }
         });
     }
 
@@ -128,11 +130,11 @@ export const EmptyList = () => {
                 title="Template !"
                 className={classes.emptyImg}
             />
-            <Typography variant='h5'>
+            <Typography variant='h5' color='secondary'>
                 Oops... Looks like you don't have a saved template here
             </Typography>
-            <Typography variant='h6'>
-                Click on 'Create Template' to start!
+            <Typography variant='h6' color='secondary'>
+                Click on <b>'Create Template'</b> to start!
             </Typography>
         </Grid>
     )

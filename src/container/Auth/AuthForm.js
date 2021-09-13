@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
     padding: `0 ${theme.spacing(6)}px`,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    borderRadius: '0 10px 10px 0'
   },
   input: {
     marginBottom: theme.spacing(1)
@@ -46,7 +47,7 @@ const AuthForm = () => {
   let isLoading = useSelector((state) => state.app.isLoading)
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} elevation={2}>
       <LogoComp size='small' />
       <div>
         <div className={classes.formIntro}>

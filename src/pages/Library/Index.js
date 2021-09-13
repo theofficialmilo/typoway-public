@@ -100,49 +100,49 @@ const Library = ({ history }) => {
     const dialogConfirmationData = dialogDeleteData();
 
     return (
-        <>
-            <Card className={classes.card}>
-                <CardHeader title={'Template List'} />
-                <CardContent className={classes.cardName}>
-                    <TemplateList history={history} onMore={handleOnMore} load={template.isLoading} templates={template.list} />
-                </CardContent>
-                <CardActions className={classes.cardActions}>
-                    <Fab
-                        variant="extended"
-                        component={RouterLink}
-                        to={'/library/editor'}
-                        color="primary"
-                        aria-label="add"
-                        className={classes.fab}>
-                        <AddIcon className={classes.fabIcon} />
-                        Create Template
-                    </Fab>
-                </CardActions>
-            </Card>
-            <DialogConfirm isOpen={isOpen} data={dialogConfirmationData} handleCancel={() => setIsOpen(false)} handleClick={handleOnConfirm} />
-            <Menu
-              id='simple-menu'
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-              getContentAnchorEl={null}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-            >
-              <MenuItem onClick={handleExport}>
-                <Typography color='secondary'>Export Template</Typography>
-              </MenuItem>
-              <MenuItem onClick={handleDelete}>
-                <Typography color='error'>Delete</Typography>
-              </MenuItem>
-            </Menu>
+      <>
+        <Card className={classes.card}>
+          <CardHeader title={'My Designs'} />
+          <CardContent className={classes.cardName}>
+            <TemplateList history={history} onMore={handleOnMore} load={template.isLoading} templates={template.list} />
+          </CardContent>
+          <CardActions className={classes.cardActions}>
+            <Fab
+              variant="extended"
+              component={RouterLink}
+              to={'/library/editor'}
+              color="primary"
+              aria-label="add"
+              className={classes.fab}>
+              <AddIcon className={classes.fabIcon} />
+               Create Template
+             </Fab>
+          </CardActions>
+        </Card>
+        <DialogConfirm isOpen={isOpen} data={dialogConfirmationData} handleCancel={() => setIsOpen(false)} handleClick={handleOnConfirm} />
+        <Menu
+          keepMounted
+          id='simple-menu'
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+          getContentAnchorEl={null}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+          <MenuItem onClick={handleExport}>
+            <Typography color='secondary'>Export Template</Typography>
+          </MenuItem>
+          <MenuItem onClick={handleDelete}>
+            <Typography color='error'>Delete</Typography>
+          </MenuItem>
+        </Menu>
         </>
     )
 }

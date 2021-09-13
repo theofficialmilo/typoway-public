@@ -1,4 +1,4 @@
-import { InsertDriveFileOutlined, Dashboard, Message, PhotoLibrary } from '@material-ui/icons'
+import { InsertDriveFileOutlined, Dashboard, Message, Store, Folder, Star, Forum, Announcement, ListAlt } from '@material-ui/icons'
 
 export const dialogDeleteData = () => {
   return {
@@ -15,7 +15,7 @@ export const dialogGoBackData = () => {
 }
 
 export const templateTypeData = () => {
-  return ["Email", 'Advertisment', 'Newsletter']
+  return ["Email", 'Advertisement', 'Newsletter']
 }
 
 export const designTypeData = () => {
@@ -39,13 +39,45 @@ export const stepsData = () => {
 
 export const navLinksData = () => {
   return {
-    message: {
+    store: {
+      icon: <Store />,
+      link: "/store/featured"
+    },
+    designs: {
+      icon: <Folder />,
+      link: "/library"
+    },
+    sendbox: {
       icon: <Message />,
       link: "/message"
     },
-    library: {
-      icon: <PhotoLibrary />,
-      link: "/library"
-    }
+    
   }
 }
+
+export const marketplaceNav = [
+  {
+    id: 0,
+    title: 'Featured',
+    icon: <Star/>,
+    to: '/store/featured'
+  },
+  {
+    id: 1,
+    title: 'Email',
+    icon: <Forum/>,
+    to: '/store/category/email'
+  },
+  {
+    id: 2,
+    title: 'Advertisment',
+    icon: <Announcement/>,
+    to: '/store/category/advertisement'
+  },
+  {
+    id: 3,
+    title: 'Newsletter',
+    icon: <ListAlt/>,
+    to: '/store/category/newsletter'
+  }
+]

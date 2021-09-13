@@ -5,6 +5,18 @@ export const CustomMuiTheme = createTheme({
     MuiPaper: {
       rounded: {
         borderRadius: '10px'
+      },
+      elevation0: {
+        background: 'rgba(255, 255, 255, 0.50)',
+        backdropFilter: 'blur(4px)',
+      },
+      elevation1: {
+        background: 'rgba(255, 255, 255, 0.75)',
+        backdropFilter: 'blur(4px)',
+        border: '1px solid rgba(255, 255, 255, 0.18)'
+      },
+      elevation2: {
+        background: 'rgba(255, 255, 255, 1)'
       }
     },
     MuiCard: {
@@ -41,13 +53,10 @@ export const CustomMuiTheme = createTheme({
     MuiListItem: {
       root: {
         "&$selected": {
-          color: '#fff',
-          backgroundColor: "#1989fa ",
-          "&:hover": {
-            backgroundColor: "#1989fa ",
-          },
+          color: '#1989fa',
+          backgroundColor: "transparent",
           "& > div > h6 ": {
-            color: '#fff'
+            color: '#1989fa'
           },
           "& > div > p": {
             color: '#ccc'
@@ -119,6 +128,11 @@ export const CustomMuiTheme = createTheme({
       paperAnchorDockedLeft: {
         borderRight: 0,
         top: '48px',
+      }
+    },
+    MuiDialog: {
+      paperWidthMd: {
+        maxHeight: '640px'
       }
     }
   },

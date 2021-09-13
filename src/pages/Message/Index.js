@@ -60,7 +60,7 @@ const Message = ({ history }) => {
   return (
     <Card className={classes.card}>
       <CardHeader
-        title={'Messages Sent'}
+        title={'Email Sendbox'}
         action={
           <Button
             color='primary'

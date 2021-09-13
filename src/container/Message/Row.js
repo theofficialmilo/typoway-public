@@ -13,14 +13,33 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '8px',
     borderRadius: '10px'
   },
+  rootSelected: {
+     backgroundColor: '#1989fa !important',
+      color: '#fff !important',
+      "& > div > h6 ": {
+        color: '#fff !important'
+      },
+      "& > div > p": {
+        color: '#ccc !important'
+      },
+      "& > div > span": {
+        color: '#737373 !important'
+      },
+      "& > div > .MuiIconButton-label": {
+        color: '#ccc !important'
+      },
+      "& ~ div > span > span": {
+        color: '#fff !important'
+      },
+      "& ~ div > button": {
+        color: '#fff',
+        "&:hover": {
+          color: "#ccc !important"
+        }
+      }
+  },
   listItemText: {
     width: '100%'
-  },
-  flexBox: {
-    backgroundColor: (read) => read ? "#fff" : "#F0F0F0",
-    "&:hover": {
-      backgroundColor: (read) => read ? "#fff" : "#F0F0F0",
-    },
   },
   primaryTextDiv: {
     justifyContent: 'space-between'
@@ -45,7 +64,10 @@ export const EmptyRow = ({ index }) => {
     <ListItem
       button
       disabled
-      className={classes.root}
+      classes={{
+        root: classes.root,
+        selected: classes.rootSelected
+      }}
       key={index}
       id={index}
       alignItems='flex-start'
@@ -106,7 +128,10 @@ export const Row = ({ message, handleMessageClick, selected }) => {
   return (
     <ListItem
       button
-      className={classes.root}
+      classes={{
+        root: classes.root,
+        selected: classes.rootSelected
+      }}
       selected={selected}
       key={message.id}
       id={message.id}

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import store from './state/store';
 import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
 
 import { Router } from 'react-router-dom'
 import { history } from './utils/history';
@@ -27,4 +26,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-serviceWorker.unregister();

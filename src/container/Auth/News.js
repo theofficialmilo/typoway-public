@@ -49,9 +49,7 @@ const News = () => {
         <List className={classes.list}>
           {data.length !== 0 ?
             data.map((post, index) => (
-              <React.Fragment key={index}>
-                <Post key={index} data={post} index={index} />
-              </React.Fragment>
+              <Post key={index} data={post} index={index} />
             )) :
             <Post isLoading={true} index={0} />
           }

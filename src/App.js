@@ -39,7 +39,7 @@ function App() {
     window.gapi.client.init({
       apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
       clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-      scope: "https://www.googleapis.com/auth/gmail.modify",
+      scope: "https://mail.google.com/",
       discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"]
     }).then(() => {
       window.gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);

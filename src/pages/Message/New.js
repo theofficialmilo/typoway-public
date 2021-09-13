@@ -136,7 +136,7 @@ const New = ({ history, location }) => {
   }
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} elevation={2}>
       <Toolbar>
         <Box className={classes.title}>
           <IconButton
@@ -146,7 +146,7 @@ const New = ({ history, location }) => {
             <ArrowBackIos fontSize="small" />
           </IconButton>
           <Typography variant='h6' color='secondary'>
-            {!loading ? 'Send Message' : <Skeleton width={150} />}
+            {!loading ? 'Send Email' : <Skeleton width={150} />}
           </Typography>
         </Box>
         <div className={classes.buttonDiv}>

@@ -20,7 +20,7 @@ const Post = ({ data, index, isLoading }) => {
   const classes = useStyles();
 
   return (
-    <ListItem component='div' id={index} key={index} disableGutters>
+    <ListItem component='div' id={index} disableGutters>
       <Card variant='outlined' className={classes.card}>
         <CardContent>
           <Typography
@@ -40,7 +40,7 @@ const Post = ({ data, index, isLoading }) => {
                 <div className={classes.listDiv}>
                   <Typography color='secondary' variant="h6" children="Features" />
                   {data.features.map((feature, index) => (
-                    <Typography color='secondary' variant="body1" children={`- ${feature}`} />
+                    <Typography key={index} color='secondary' variant="body1" children={`- ${feature}`} />
                   ))}
                 </div>
               }
@@ -48,7 +48,7 @@ const Post = ({ data, index, isLoading }) => {
                 <div className={classes.listDiv}>
                   <Typography color='secondary' variant="h6" children="In the works" />
                   {data.upcoming.map((upcoming, index) => (
-                    <Typography color='secondary' variant="body1" children={`- ${upcoming}`} />
+                    <Typography key={index} color='secondary' variant="body1" children={`- ${upcoming}`} />
                   ))}
                 </div>
               }

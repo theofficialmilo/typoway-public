@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Toolbar, AppBar, Typography, Button, Avatar, Popover, Card, CardContent, CardActions, Divider, makeStyles } from '@material-ui/core'
+import { Toolbar, AppBar, Typography, IconButton, Button, Avatar, Popover, CardContent, CardActions, makeStyles } from '@material-ui/core'
 
 import Logo from '../assets/logo.png'
 
@@ -57,7 +57,6 @@ export const Header = () => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
 
   const handleSignOut = (e) => {
     e.preventDefault();
@@ -72,14 +71,15 @@ export const Header = () => {
           <Typography variant='h5'>Typoway</Typography>
         </div>
         <div>
-          <Button size='small' onClick={handleClick}>
+          <IconButton edge='end' onClick={handleClick}>
             <Avatar alt={user.name} src={user.iconUrl}>{user.name.charAt(0)}</Avatar>
-          </Button>
+          </IconButton>
           <Popover
-            id={id}
+            id='user-popover'   
             open={open}
             anchorEl={anchorEl}
             onClose={handleClose}
+            elevation={4}
             anchorOrigin={{
               vertical: 'bottom',
               horizontal: 'right',
@@ -88,22 +88,23 @@ export const Header = () => {
               vertical: 'top',
               horizontal: 'center',
             }}
+            PaperProps={{
+              className: classes.cardRoot
+            }}
           >
-            <Card className={classes.cardRoot}>
-              <CardContent>
-                <Avatar className={classes.avatarCard} alt={user.name} src={user.iconUrl}/>
-                <Typography variant='h6'><b>{user.name}</b></Typography>
-                <Typography variant='body2' color='secondary'>{user.email}</Typography>
-              </CardContent>
-              <CardActions className={classes.cardAction}>
-                <Button disableElevation href='https://forms.gle/M3ZC3tHZhJZnpp9UA' target='_blank' variant='contained' fullWidth>
-                  Feedback
-                </Button>
-                <Button disableElevation onClick={(e) => handleSignOut(e)} color='primary' variant='contained' fullWidth>
-                  Sign Out
-                </Button>
-              </CardActions>
-            </Card>
+            <CardContent>
+              <Avatar className={classes.avatarCard} alt={user.name} src={user.iconUrl}/>
+              <Typography variant='h6'><b>{user.name}</b></Typography>
+              <Typography variant='body2' color='secondary'>{user.email}</Typography>
+            </CardContent>
+            <CardActions className={classes.cardAction}>
+              <Button disableElevation href='https://forms.gle/M3ZC3tHZhJZnpp9UA' target='_blank' variant='contained' fullWidth>
+                Feedback
+              </Button>
+              <Button disableElevation onClick={(e) => handleSignOut(e)} color='primary' variant='contained' fullWidth>
+                Sign Out
+              </Button>
+            </CardActions>
           </Popover>
         </div>
       </Toolbar>

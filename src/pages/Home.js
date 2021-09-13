@@ -11,7 +11,7 @@ import ViewLibrary from './Library/Index'
 import Editor from './Library/Editor'
 import New from './Message/New';
 import Message from './Message/Index';
-
+import Marketplace from './Marketplace/Index'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +38,8 @@ const Home = () => {
       <main className={classes.mainDiv}>
         <Sidebar />
         <Switch>
-          <Route exact path="/" render={() => <Redirect to='/message' />} />
+          <Route exact path="/" render={() => <Redirect to='/store/featured' />} />
+          <Route path ="/store/:type/:value?" render={(props) => <Marketplace {...props}/>} />
           <Route exact path="/message" render={(props) => <Message {...props} />} />
           <Route exact path="/message/new" render={(props) => <New {...props} />} />
           <Route exact path="/library" render={(props) => <ViewLibrary {...props} />} />

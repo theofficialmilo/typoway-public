@@ -1,4 +1,5 @@
 import { Base64 } from "js-base64";
+import { templateTypeData } from "./data";
 
 export const isEmpty = (obj) => {
   for (var key in obj) {
@@ -65,4 +66,10 @@ export const requestDownload = (resp) => {
   element.download = `${resp.name} Email Template.html`;
   document.body.appendChild(element);
   element.click();
+}
+
+export const categoryConverter = (string) => {
+  const template = templateTypeData();
+  const value = template.indexOf(string.charAt(0).toUpperCase() + string.slice(1))
+  return value
 }
