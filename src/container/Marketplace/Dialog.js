@@ -43,9 +43,9 @@ const useStyles = makeStyles(theme => ({
     right: theme.spacing(1),
     top: theme.spacing(2),
   },
-  small: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
+  avatarIcon: {
+    width: theme.spacing(5),
+    height: theme.spacing(5),
     marginRight: theme.spacing(1)
   },
   avatarButton: {
@@ -78,13 +78,13 @@ const TemplateDialog = ({id, open, handleClose, handleSave}) => {
       {template !== null && 
         <Grid container className={classes.inheritStyle}>
         <Grid item md={6} className={classes.imgContainer}>
-          <img className={classes.img} alt={`${template.title} image`} src={template.imgUrl}/>
+          <img className={classes.img} alt={template.title} src={template.imgUrl}/>
         </Grid>
         <Grid item md={6}>
         <DialogTitle disableTypography className={classes.dialogTitle}>
           <ButtonBase className={classes.avatarButton} disabled>
-            <Avatar className={classes.small} src={template.account.iconUrl}/>
-            <Typography variant="body2" display='inline' color='secondary'>
+            <Avatar className={classes.avatarIcon}  src={template.account.iconUrl}/>
+            <Typography variant="body1" display='inline' color='secondary'>
               {template.account.name}
             </Typography>
           </ButtonBase>

@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useParams, useHistory, Route, Switch, Redirect } from 'react-router-dom';
 
-import {Box, TextField, InputAdornment, Card, Typography, CardHeader, CardContent} from '@material-ui/core'
-import {Search} from '@material-ui/icons'
+import {Box, Card, Typography, CardHeader, CardContent} from '@material-ui/core'
 
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
@@ -22,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   },
   cardContent: {
     overflowY: 'auto',
-    height: 'calc(100% - 16px)'
+    height: 'calc(100% - 64px)'
   }
 }))
 

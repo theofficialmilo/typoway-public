@@ -23,16 +23,6 @@ const useStyles = makeStyles({
   }
 });
 
-const SkeletonTemplateCard = () => {
-  const classes = useStyles();
-
-  return (
-    <Card className={classes.media}>
-
-    </Card>
-  )
-}
-
 const TemplateCard = ({id, imgUrl, price, title, userName, templateType, handleOnClick}) => {
   const classes = useStyles();
   const history = useHistory();
@@ -61,7 +51,7 @@ const TemplateCard = ({id, imgUrl, price, title, userName, templateType, handleO
               {title}
             </Typography>
             <Typography variant="h6" color="secondary">
-              {price == 0 ? 'Free' : `$${price}`}
+              {price === 0 ? 'Free' : `$${price}`}
             </Typography>
           </div>
           <div className={classes.cardHeader}>
