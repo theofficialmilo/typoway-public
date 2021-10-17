@@ -15,6 +15,7 @@ import Marketplace from './Marketplace/Index'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    maxHeight: '100vh',
     height: '100vh',
     backgroundImage: `linear-gradient(#89cffa, #f5fbff);`,
     backgroundSize: 'cover',

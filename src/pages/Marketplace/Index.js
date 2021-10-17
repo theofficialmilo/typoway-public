@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory, Route, Switch, Redirect } from 'react-router-dom';
 
 import {Box, Card, Typography, CardHeader, CardContent} from '@material-ui/core'
@@ -10,8 +11,13 @@ import Sidebar from '../../container/Marketplace/Sidebar'
 import Dialog from '../../container/Marketplace/Dialog'
 import Featured from './Featured'
 import ByCategory from './ByCategory';
+import ByUser from './ByUser';
+import { getMarketplaceDataAction } from '../../state/marketplace/marketplaceDucks';
 
 const useStyles = makeStyles(theme => ({
+  button: {
+    marginLeft: '-8px'
+  },
   sidebar: {
     width: '250px'
   },
@@ -27,11 +33,19 @@ const useStyles = makeStyles(theme => ({
 
 const Index = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [selected, setSelected] = useState('Featured');
   const [template, setTemplate] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const params = useParams();
   const history = useHistory();
+
+  const {isLoading ,templates, contributors} = useSelector(state => state.marketplace)
+
+  useEffect(() => {
+    if(templates.length !== 0) return 
+      dispatch(getMarketplaceDataAction());
+  },[])
 
   useEffect(() => {
     if(template !== null) setIsOpen(true)
@@ -45,6 +59,14 @@ const Index = () => {
   const handleOnClose = () => {
     setTemplate(null);
   }
+
+  const handleOnUser = (e) => {
+    setTemplate(null);
+    const id = e.currentTarget.id;
+    history.push({
+      pathname: `/store/user/${id}`,
+    }); 
+  } 
 
   const handleOnMore = (e) => {
     e.preventDefault();
@@ -65,21 +87,28 @@ const Index = () => {
   return (
     <MainSection>
       <Box className={classes.sidebar}>
-        <Sidebar active={selected} handleSelect={handleOnSelect}/>
+        <Sidebar active={selected} handleSelect={handleOnSelect} />
       </Box>
       <Card className={classes.fullWidth} elevation={0}>
+        { params.type!=='user' && 
         <CardHeader 
-          title={<Typography variant='h5' color='primary' style={{textTransform: 'capitalize'}}>{params.value? params.value: params.type}</Typography>}
+          title={
+          <Typography variant='h5' color='primary' style={{textTransform: 'capitalize'}}>
+            {params.value ? params.value: params.type}
+          </Typography> 
+        }
         />
+      }
         <CardContent className={classes.cardContent}>
           <Switch>
             <Route exact path='/store' render={() => <Redirect to='/store/featured'/>}/>
-            <Route exact path='/store/featured' render={(props => <Featured handleOnMore={e => handleOnMore(e)} {...props}/>)} />
-            <Route path='/store/category/:value'  render={(props => <ByCategory  handleOnMore={e => handleOnMore(e)} {...props} />)} />
+            <Route exact path='/store/featured' render={(props => <Featured handleOnMore={e => handleOnMore(e)} templates={templates} contributors={contributors} isLoading={isLoading} {...props}/>)} />
+            <Route path='/store/category/:value'  render={(props => <ByCategory handleOnMore={e => handleOnMore(e)} templates={templates} {...props} />)}  />
+            <Route path='/store/user/:value'  render={(props => <ByUser handleOnMore={e => handleOnMore(e)} templates={templates} contributors={contributors} {...props} />)}/>
           </Switch>
         </CardContent>
       </Card>
-      <Dialog id={template} open={isOpen} handleClose={handleOnClose} handleSave={handleOnSave}/>
+      <Dialog id={template} open={isOpen} handleClose={handleOnClose} handleSave={handleOnSave} handleUser={handleOnUser}/>
     </MainSection>
   )
 }

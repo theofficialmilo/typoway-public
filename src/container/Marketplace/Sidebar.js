@@ -31,7 +31,6 @@ const Sidebar = ({active, handleSelect}) => {
           <Typography variant='h5'>Store</Typography>
         </ListItem>
         {marketplaceNav.map((data, index) => (
-
           <ListItem 
             dense 
             id={data.title}

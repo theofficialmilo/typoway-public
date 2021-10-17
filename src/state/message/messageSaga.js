@@ -16,6 +16,7 @@ export function* handleGetMessages() {
     yield put(getMessageDataAction(response));
   } catch (error) {
     yield put(setAlertAction({type: 'error', message: error.message}))
+    yield put(setLoadingListAction(true));
   }
 }
 
@@ -27,6 +28,7 @@ export function* handleGetMessagesData(resp) {
     yield put(setLoadingListAction(false));
   } catch (error) {
     yield put(setAlertAction({type: 'error', message: error.message}))
+    yield put(setLoadingListAction(true));
   }
 }
 

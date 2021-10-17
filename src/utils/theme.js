@@ -136,6 +136,7 @@ export const CustomMuiTheme = createTheme({
       }
     }
   },
+  
   palette: {
     primary: {
       // Purple and green play nicely together.
@@ -160,7 +161,8 @@ export const CustomMuiTheme = createTheme({
     h6: {
       fontSize: "1.125rem"
     }
-  }
+  },
+  
 })
 
 export default CustomMuiTheme

@@ -26,7 +26,6 @@ export const getTemplate = (id) => {
       }
     })
     .catch((err) => {
-      console.error(err);
       return err
     })
 }

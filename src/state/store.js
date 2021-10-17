@@ -6,12 +6,14 @@ import userReducer from './user/userDucks'
 import templateReducer from './template/templateDucks'
 
 import { watcherSaga } from './rootSaga'
+import marketplaceReducer from './marketplace/marketplaceDucks'
 
 const reducer = combineReducers({
   user: userReducer,
   app: appReducer,
   message: messageReducer,
-  template: templateReducer
+  template: templateReducer,
+  marketplace: marketplaceReducer
 })
 
 const sagaMiddleWare = createSagaMiddleware()

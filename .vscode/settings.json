@@ -1,5 +1,10 @@
 {
   "files.exclude": {
     "**/.git": false
-  }
+  },
+  "vscode_vibrancy.theme": "Default Dark",
+  "vscode_vibrancy.opacity": 0.50,
+  "vscode_vibrancy.imports": [
+    "$theme-style$"
+  ]
 }

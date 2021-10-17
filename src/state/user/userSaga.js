@@ -4,6 +4,9 @@ import { loginFirebaseUser, signOutFirebaseUser, createNewUser } from '../../ser
 
 import { setUserAction, clearUserAction } from './userDucks'
 import { setIsLoadingAction, setAlertAction } from '../app/appDucks'
+import { clearListAction } from '../template/templateDucks';
+import { clearMessagesAction } from '../message/messageDucks';
+import { clearMarketplaceDataAction } from '../marketplace/marketplaceDucks';
 
 export function* handleLogin({ payload }) {
   try {
@@ -44,9 +47,13 @@ export function* handleLogin({ payload }) {
 export function* handleLogout() {
   try {
     yield call(signOutFirebaseUser)
+    yield put(clearListAction())
+    yield put(clearMessagesAction())
+    yield put(clearMarketplaceDataAction())
     yield put(clearUserAction())
     yield put(setAlertAction({ type: 'info', message: 'You have been logged out!'}))
   } catch (error) {
+    console.log(error)
     yield put(setAlertAction({ type: 'error', message: 'Something went wrong. Please try again later' }))
   }
 }

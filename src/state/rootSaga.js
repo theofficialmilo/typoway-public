@@ -8,6 +8,8 @@ import { handleGetMessages, handleGetMessagesData, handleGetOneMessageData } fro
 
 import { GET_LIST } from './template/templateDucks'
 import { handleGetList } from './template/templateSaga'
+import { GET_MARKETPLACE_DATA } from './marketplace/marketplaceDucks'
+import { handleGetMarketplaceData } from './marketplace/marketplaceSaga'
 
 export function* watcherSaga() {
   yield takeLatest(LOG_IN, handleLogin)
@@ -18,6 +20,7 @@ export function* watcherSaga() {
 
   yield takeLatest(GET_MESSAGE_DATA, handleGetOneMessageData)
 
-
   yield takeLatest(GET_LIST, handleGetList)
+
+  yield takeLatest(GET_MARKETPLACE_DATA, handleGetMarketplaceData)
 }

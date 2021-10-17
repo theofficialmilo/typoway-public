@@ -30,22 +30,22 @@ function App() {
     }
     else {
       if (isSignedIn !== false) {
-        dispatch(setAlertAction({ type: 'error', message: 'Something went wrong. Please relogin again.' }))
+        dispatch(setAlertAction({ type: 'error', message: 'Something went wrong. Please relogin again.' }));
       }
     }
   }, [dispatch])
 
   const initClient = useCallback(() => {
     window.gapi.client.init({
-      apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-      clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+      apiKey: 'AIzaSyC_YGIEP_sfw3fvgcVzkdmeYCM8Hffhbdk',
+      clientId: '277440582792-dvdlnp0ihrt49qtdl7prcgjoq4mm87b4.apps.googleusercontent.com',
       scope: "https://mail.google.com/",
       discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"]
     }).then(() => {
       window.gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
       updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get());
     }).catch((err) => {
-      dispatch(setAlertAction({ type: 'error', message: err.details }))
+      dispatch(setAlertAction({ type: 'error', message: 'Something went wrong. Please try again again.'  }))
     })
   }, [updateSigninStatus])
 

@@ -178,7 +178,7 @@ const New = ({ history, location }) => {
           className={classes.editor}
           initialValue={templateHtml}
           outputFormat='html'
-          apiKey={process.env.REACT_APP_TINYMCE_KEY}
+          apiKey={'c3do1o6m21wc7timbtoig1s5jfkckjrt66oh34119uspxg2f'}
           init={{
             visual: false,
             width: '100%',

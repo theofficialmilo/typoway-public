@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react'
-
+import { useDispatch } from 'react-redux'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Grid, Typography, IconButton, Avatar, Button, ButtonBase} from '@material-ui/core'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import { Close } from '@material-ui/icons'
 import { getTemplate } from '../../service/storeServices'
 
 import { templateTypeData } from '../../utils/data'
+import { setAlertAction } from '../../state/app/appDucks';
 
 const useStyles = makeStyles(theme => ({
   inheritStyle: {
@@ -16,7 +17,6 @@ const useStyles = makeStyles(theme => ({
     overflowY:'auto'
   },
   img:{
-    height: 'fit-content',
     width: '100%',
   },
   dialogTitle: {
@@ -59,30 +59,35 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const TemplateDialog = ({id, open, handleClose, handleSave}) => {
+const TemplateDialog = ({id, open, handleClose, handleSave, handleUser}) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [template, setTemplate] = useState(null);
   const templateData = templateTypeData();
   
   useEffect(()=> {
     if(open) {
       getTemplate(id)
-        .then(doc =>
+        .then(doc => {
           setTemplate(doc)
-        )
+        })
+        .catch(err => {
+          dispatch(setAlertAction({type:'error', message: err.code}))
+        })
     }
   },[open])
+
 
   return (
     <Dialog fullWidth maxWidth={'md'} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
       {template !== null && 
         <Grid container className={classes.inheritStyle}>
         <Grid item md={6} className={classes.imgContainer}>
-          <img className={classes.img} alt={template.title} src={template.imgUrl}/>
+          <img className={classes.img} alt={template.title} src={template.imgUrl} />
         </Grid>
         <Grid item md={6}>
         <DialogTitle disableTypography className={classes.dialogTitle}>
-          <ButtonBase className={classes.avatarButton} disabled>
+          <ButtonBase className={classes.avatarButton} id={template.account.id} onClick={handleUser}>
             <Avatar className={classes.avatarIcon}  src={template.account.iconUrl}/>
             <Typography variant="body1" display='inline' color='secondary'>
               {template.account.name}

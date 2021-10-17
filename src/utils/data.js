@@ -15,7 +15,7 @@ export const dialogGoBackData = () => {
 }
 
 export const templateTypeData = () => {
-  return ["Email", 'Advertisement', 'Newsletter']
+  return ["Email", 'Advertisement', 'Newsletter', 'Signature']
 }
 
 export const designTypeData = () => {
