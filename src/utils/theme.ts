@@ -149,9 +149,6 @@ export const CustomMuiTheme = createTheme({
       main: '#737373',
       light: '#a2a2a2',
       dark: '#383838'
-    },
-    white: {
-      main: '#fff'
     }
   },
   typography: {

@@ -1,6 +1,9 @@
-const initialState = {
+import { AnyAction } from "redux";
+import { Contributor, Marketplace, Template } from "../../interfaces/Marketplace";
+
+
+const initialState: Marketplace = {
   templates: [],
-  template: {},
   contributors: [],
   isLoading: true,
 }
@@ -12,7 +15,7 @@ export const SET_LOADING = "marketplace/SET_LOADING";
 export const GET_MARKETPLACE_DATA = 'marketplace/GET_MARKETPLACE_DATA"';
 const CLEAR_MARKETPLACE_DATA = 'marketplace/CLEAR_MARKETPLACE_DATA';
 
-export const marketplaceReducer = (state = initialState, action)=> {
+export const marketplaceReducer = (state = initialState, action: AnyAction)=> {
   switch(action.type) {
     case SET_TEMPLATES: 
       return{
@@ -47,24 +50,24 @@ export const marketplaceReducer = (state = initialState, action)=> {
 export default marketplaceReducer 
 
 //Action Creators
-export const setTemplatesAction = (templates) => {
+export const setTemplatesAction = (templates:Template[]) => {
   return {
     type: SET_TEMPLATES,
     payload: templates
   }
 }
 
-export const setContributorsAction = (contributors) => {
+export const setContributorsAction = (contributors:Contributor[]) => {
   return {
     type: SET_CONTRIBUTORS,
     payload: contributors
   }
 } 
 
-export const setIsLoading = (bool) => {
+export const setIsLoading = (isLoading:boolean) => {
   return {
     type: SET_LOADING,
-    payload: bool
+    payload: isLoading
   }
 }
 

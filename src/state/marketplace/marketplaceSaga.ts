@@ -1,4 +1,5 @@
 import {call, put} from 'redux-saga/effects'
+import { Contributor, Template } from '../../interfaces/Marketplace';
 import { getTemplateList, getTopContributors } from '../../service/storeServices'
 import { setAlertAction } from '../app/appDucks';
 import { setContributorsAction, setIsLoading, setTemplatesAction } from './marketplaceDucks';
@@ -6,11 +7,11 @@ import { setContributorsAction, setIsLoading, setTemplatesAction } from './marke
 export function* handleGetMarketplaceData () {
   try{
     yield put(setIsLoading(true));
-    const listResponse = yield call(getTemplateList);
+    const listResponse: any = yield call(getTemplateList);
     const contributorResponse = yield call(getTopContributors);
     
-    var listData=[]
-    listResponse.forEach((doc) => {
+    var templateList: Template[]=[]
+    listResponse.forEach((doc: any) => {
       const docData = doc.data()
       let document =  {
         id: doc.id,
@@ -23,10 +24,10 @@ export function* handleGetMarketplaceData () {
           id: docData.account.id
         }
       }
-      listData.push(document)
+      templateList.push(document)
     })
     
-    var contributorData=[]
+    var contributorData: Contributor[]=[]
     contributorResponse.forEach((doc) => {
       const docData = doc.data()
       let document =  {
@@ -37,7 +38,7 @@ export function* handleGetMarketplaceData () {
       contributorData.push(document)
     })
 
-    yield put(setTemplatesAction(listData));
+    yield put(setTemplatesAction(templateList));
     yield put(setContributorsAction(contributorData));
     yield put(setIsLoading(false));
   }

@@ -1,4 +1,7 @@
-const initialState = {
+import { AnyAction } from "redux"
+import { App, Alert } from "../../interfaces/App"
+
+const initialState: App = {
   isLoading: false,
   alert: {
     isOpen: false,
@@ -11,7 +14,7 @@ const SET_ISLOADING = "app/SET_ISLOADING"
 const SET_ALERT = "app/SET_ALERT"
 const CLEAR_ALERT = "app/CLEAR_ALERT"
 
-const appReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action:AnyAction) => {
   switch (action.type) {
     case SET_ISLOADING:
       return {
@@ -45,14 +48,14 @@ const appReducer = (state = initialState, action) => {
 
 export default appReducer
 
-export const setIsLoadingAction = (isLoading) => {
+export const setIsLoadingAction = (isLoading: boolean) => {
   return {
     type: SET_ISLOADING,
     payload: isLoading
   }
 }
 
-export const setAlertAction = (data) => {
+export const setAlertAction = (data: Alert) => {
   return {
     type: SET_ALERT,
     payload: data

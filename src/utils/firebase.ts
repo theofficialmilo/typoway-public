@@ -4,6 +4,7 @@ import "firebase/firestore"
 
 import {firebaseConfig} from './config'
 
+//For initalizing Firebase
 const app = firebase.initializeApp(firebaseConfig);
 
 export const auth = app.auth()

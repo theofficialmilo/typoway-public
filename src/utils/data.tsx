@@ -1,24 +1,25 @@
 import { InsertDriveFileOutlined, Dashboard, Message, Store, Folder, Star, Forum, Announcement, ListAlt } from '@material-ui/icons'
+import { DesignTypeData, DialogData, NavData } from '../interfaces/Ui';
 
-export const dialogDeleteData = () => {
+export const dialogDeleteData: Function = (): DialogData => {
   return {
     title: 'Delete template?',
     content: 'Are you sure you want to delete the template? \nDeleted template cannot be recovered.'
   }
 }
 
-export const dialogGoBackData = () => {
+export const dialogGoBackData: Function = (): DialogData => {
   return {
     title: 'Leaving without saving?',
     content: 'Oops, looks like you did not save your template.\n Are you sure you want to leave without making any changes?'
   }
 }
 
-export const templateTypeData = () => {
+export const templateTypeData: Function = (): Array<string> => {
   return ["Email", 'Advertisement', 'Newsletter', 'Signature']
 }
 
-export const designTypeData = () => {
+export const designTypeData: Function = (): Array<DesignTypeData> => {
   return [
     {
       label: 'Blank',
@@ -33,29 +34,32 @@ export const designTypeData = () => {
   ]
 }
 
-export const stepsData = () => {
+export const stepsData: Function = () : Array<string> => {
   return ["Template Info", 'Start Designing!']
 }
 
-export const navLinksData = () => {
-  return {
-    store: {
-      icon: <Store />,
-      link: "/store/featured"
-    },
-    designs: {
-      icon: <Folder />,
-      link: "/library"
-    },
-    sendbox: {
-      icon: <Message />,
-      link: "/message"
-    },
-    
-  }
-}
+export const mainNav: Array<NavData> = [
+  {
+    id: 0,
+    title: 'Store',
+    icon: <Store />,
+    to: '/store/featured'
+  },
+  {
+    id: 1,
+    title: 'Designs',
+    icon: <Store />,
+    to: '/library'
+  },
+  {
+    id: 2,
+    title: 'Sendbox',
+    icon: <Message />,
+    to: '/message'
+  },
+]
 
-export const marketplaceNav = [
+export const marketplaceNav: Array<NavData> = [
   {
     id: 0,
     title: 'Featured',

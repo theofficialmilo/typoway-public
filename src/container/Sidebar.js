@@ -4,10 +4,7 @@ import { List, makeStyles } from '@material-ui/core'
 import { useLocation } from 'react-router'
 
 import ListItemLink from '../components/ListItemLink'
-import { navLinksData } from '../utils/data'
-
-//Object Array of NavLinks
-const navLinks = navLinksData();
+import { mainNav } from '../utils/data'
 
 const useStyles = makeStyles((theme) => ({
   listComponent: {
@@ -43,14 +40,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Sidebar = () => {
   const classes = useStyles();
-  const [active, setActive] = useState("message");
+  const [active, setActive] = useState("Store");
   const location = useLocation();
 
   useEffect(() => {
-    Object.entries(navLinks).map((entry) => {
-      if (location.pathname.includes(entry[1].link)) {
-        setActive(entry[0])
-      }
+    mainNav.map((entry) => {
+      if(location.pathname.includes(entry.link)) setActive(entry.title)
     })
   }, [location])
 
@@ -60,19 +55,19 @@ const Sidebar = () => {
 
   return (
     <List disablePadding component="nav" className={classes.listComponent}>
-      {Object.entries(navLinks).map((entry, index) => (
+      {mainNav.map((data, index) => (
         <React.Fragment key={index}>
-          <ListItemLink
-            to={entry[1].link}
-            index={index}
-            text={entry[0]}
-            active={active}
-            icon={entry[1].icon}
+          <ListItemLink 
             classes={classes}
+            index={index}
+            text={data.title}
+            to={data.to}
+            icon={data.icon}
+            active={active}
             handleClick={handleOnClick}
           />
-        </React.Fragment>
-      ))}
+        </React.Fragment>))
+      }
     </List>
   )
 }
