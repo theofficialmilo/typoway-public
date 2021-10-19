@@ -7,20 +7,28 @@ import { setIsLoadingAction, setAlertAction } from '../app/appDucks'
 import { clearListAction } from '../template/templateDucks';
 import { clearMessagesAction } from '../message/messageDucks';
 import { clearMarketplaceDataAction } from '../marketplace/marketplaceDucks';
+import { History } from 'history';
+import { FirebaseAuthUser, User } from '../../interfaces/User';
 
-export function* handleLogin({ payload }) {
+export function* handleLogin() {
   try {
     yield put(setIsLoadingAction(true));
     const currentUser = window.gapi.auth2.getAuthInstance().currentUser.get();
     const authResponse = currentUser.getAuthResponse(true);
 
-    const firebaseResponse = yield call(loginFirebaseUser, authResponse)
+    const firebaseResponse: firebase.default.auth.UserCredential = yield call(loginFirebaseUser, authResponse)
 
-    const userDetails = {
-      name: firebaseResponse.user.displayName,
-      email: firebaseResponse.user.email,
-      uid: firebaseResponse.user.uid,
-      iconUrl: firebaseResponse.user.photoURL
+    // NOTE:
+    // Create Promise to handle signup
+    
+    let userDetails: FirebaseAuthUser;
+    if(firebaseResponse.user !== null){
+      userDetails = {
+        name: firebaseResponse.user.displayName,
+        email: firebaseResponse.user.email,
+        uid: firebaseResponse.user.uid,
+        iconUrl: firebaseResponse.user.photoURL
+      }
     }
 
     //Handles signup if first time user
@@ -28,7 +36,7 @@ export function* handleLogin({ payload }) {
       yield call(createNewUser, userDetails)
     }
 
-    const user = {
+    const user: User = {
       name: userDetails.name,
       email: userDetails.email,
       iconUrl: userDetails.iconUrl
@@ -36,10 +44,13 @@ export function* handleLogin({ payload }) {
 
     yield put(setUserAction(user))
     yield put(setIsLoadingAction(false));
-    payload.history.push('/')
+    // NOTE:
+    // Restructure history.push() to componenet layer ... Should not be in Redux layer.
+    ////action.payload.history.push('/')
+
     //yield login successful 
 
-  } catch (error) {
+  } catch (error: any) {
     yield put(setAlertAction({ type: 'error', message: JSON.parse(error.message).error.message }))
   }
 }

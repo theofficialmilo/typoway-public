@@ -1,24 +1,26 @@
+import { Template } from '../interfaces/Library';
 import { db, auth } from '../utils/firebase';
 
 //Gets list of templates according to accountId
-export const getTemplateList = (email) => {
+export const getTemplateList = (email: string) => {
   return db.collection("templates").where('accountId', '==', email).get();
 }
 
 //Get individual templateData according to Id
-export const getTemplate = (id) => {
+export const getTemplate = (id: string) => {
   return db.collection('templates').doc(id).get()
     .then(doc => {
       if (doc.exists) {
         const id = doc.id
-        const data = doc.data();
-
-        return {
-          id: id,
-          name: data.name,
-          templateType: data.templateType,
-          dataJson: data.dataJson,
-          dataHtml: data.dataHtml
+        const data: firebase.default.firestore.DocumentData | undefined = doc.data();
+        if(data !== undefined) {
+          return {
+            id: id,
+            name: data.name,
+            templateType: data.templateType,
+            dataJson: data.dataJson,
+            dataHtml: data.dataHtml
+          } 
         }
       }
       else {
@@ -31,16 +33,19 @@ export const getTemplate = (id) => {
 }
 
 //Sends a request to create a template in Firebase 
-export const createTemplate = (templateData) => {
-  let data = {
-    accountId: auth.currentUser.email,
-    name: templateData.name,
-    templateType: templateData.templateType,
-    dataJson: templateData.dataJson,
-    dataHtml: '',
-    createdOn: new Date(),
-    updatedOn: new Date()
-  }
+export const createTemplate = (templateData: Template) => {
+  let data: any;
+  if(auth.currentUser !== null){
+    data = {
+      accountId: auth.currentUser.email,
+      name: templateData.name,
+      templateType: templateData.templateType,
+      dataJson: templateData.dataJson,
+      dataHtml: '',
+      createdOn: new Date(),
+      updatedOn: new Date()
+   }
+}
 
   return db.collection('templates').add(data)
     .then(resp => {
@@ -52,7 +57,7 @@ export const createTemplate = (templateData) => {
 }
 
 //Sends a request to update a template in Firebase 
-export const updateTemplate = (templateData) => {
+export const updateTemplate = (templateData: Template) => {
   let data = {
     name: templateData.name,
     dataJson: templateData.dataJson,
@@ -70,7 +75,7 @@ export const updateTemplate = (templateData) => {
 }
 
 //Sends a request to delete a template in Firebase 
-export const deleteTemplate = (id) => {
+export const deleteTemplate = (id: string) => {
   return db.collection("templates").doc(id).delete()
     .then(() => {
       return "Document successfully deleted!";
@@ -80,11 +85,14 @@ export const deleteTemplate = (id) => {
 }
 
 //Sends a request to get Json Data of selected template in Firebase 
-export const getDefaultTemplate = (type) => {
+export const getDefaultTemplate = (type: string) => {
   return db.collection('defaultTemplates').doc(type).get()
-    .then((doc) => {
+    .then((doc: firebase.default.firestore.DocumentSnapshot<firebase.default.firestore.DocumentData>) => {
       if (doc.exists) {
-        return doc.data().data;
+        const document: firebase.default.firestore.DocumentData | undefined = doc.data();
+        if(document !== undefined) {
+          return document.data;
+        }
       }
       else {
         throw new Error("Document not found!");

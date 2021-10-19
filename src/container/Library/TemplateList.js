@@ -16,14 +16,14 @@ const TemplateList = ({ history, load, templates, onMore }) => {
         <LoadingTemplate />
         :
         templates.length !== 0 ?
-          templates.map(({ id, data }, index) => {
+          templates.map((template, index) => {
             return (
               <OneTemplate
                 history={history}
                 key={index}
-                id={id}
-                name={data.name}
-                templateType={typeList[data.templateType]}
+                id={template.id}
+                name={template.name}
+                templateType={typeList[template.templateType]}
                 onMore={onMore}
               />
             )

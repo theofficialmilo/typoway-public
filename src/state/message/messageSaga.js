@@ -4,7 +4,7 @@ import { setLoadingListAction, setLoadingAction, clearMessagesAction, getMessage
 import { getMessages, getMessageData } from '../../service/messageServices'
 import { getMessageBody } from '../../utils/helper';
 
-import {setAlertAction} from '../app/appDucks' 
+import { setAlertAction } from '../app/appDucks'
 
 export function* handleGetMessages() {
   try {
@@ -15,7 +15,7 @@ export function* handleGetMessages() {
     // Send Id list to getMessagesData to get Message Data foreach Id
     yield put(getMessageDataAction(response));
   } catch (error) {
-    yield put(setAlertAction({type: 'error', message: error.message}))
+    yield put(setAlertAction({ type: 'error', message: error.message }))
     yield put(setLoadingListAction(true));
   }
 }
@@ -27,7 +27,7 @@ export function* handleGetMessagesData(resp) {
     yield all(res.map(message => put(setMessagesAction(message.result))))
     yield put(setLoadingListAction(false));
   } catch (error) {
-    yield put(setAlertAction({type: 'error', message: error.message}))
+    yield put(setAlertAction({ type: 'error', message: error.message }))
     yield put(setLoadingListAction(true));
   }
 }
@@ -38,15 +38,15 @@ export function* handleGetOneMessageData({ payload }) {
     yield put(setLoadingAction(true));
     let message = yield call(getMessageData, payload)
     message = message.result
-    
+
     const dataPayload = {
-      headers:  message.payload.headers,
-      data : getMessageBody(message.payload)
+      headers: message.payload.headers,
+      data: getMessageBody(message.payload)
     }
     yield put(setMessageAction(dataPayload))
     //End Loading
     yield put(setLoadingAction(false))
   } catch (error) {
-    yield put(setAlertAction({type: 'error', message: error.message}))
+    yield put(setAlertAction({ type: 'error', message: error.message }))
   }
 }

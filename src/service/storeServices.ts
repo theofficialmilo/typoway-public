@@ -9,7 +9,7 @@ export const getTopContributors = () => {
   return db.collection("contributors").get()
 }
 
-export const getUserData = (id) => {
+export const getUserData = (id: string) => {
   return db.collection('contributors').doc(id).get()
     .then(doc => {
       const docData = doc.data()
@@ -25,7 +25,7 @@ export const getUserData = (id) => {
 }
 
 //Get template data by Id
-export const getTemplate = (id) => {
+export const getTemplate = (id: string) => {
   return db.collection("marketplace").doc(id).get()
     .then(doc => {
       const docData = doc.data()

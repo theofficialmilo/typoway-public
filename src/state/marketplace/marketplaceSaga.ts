@@ -7,11 +7,11 @@ import { setContributorsAction, setIsLoading, setTemplatesAction } from './marke
 export function* handleGetMarketplaceData () {
   try{
     yield put(setIsLoading(true));
-    const listResponse: any = yield call(getTemplateList);
-    const contributorResponse = yield call(getTopContributors);
+    const listResponse: firebase.default.firestore.QuerySnapshot = yield call(getTemplateList);
+    const contributorResponse: firebase.default.firestore.QuerySnapshot = yield call(getTopContributors);
     
     var templateList: Template[]=[]
-    listResponse.forEach((doc: any) => {
+    listResponse.forEach((doc) => {
       const docData = doc.data()
       let document =  {
         id: doc.id,
@@ -42,7 +42,8 @@ export function* handleGetMarketplaceData () {
     yield put(setContributorsAction(contributorData));
     yield put(setIsLoading(false));
   }
-  catch(error) {
+  //Any type to be updated
+  catch(error: any) {
     yield put(setAlertAction({type: 'error', message: error.message}))
   }
 }

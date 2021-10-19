@@ -1,4 +1,7 @@
-const initialState = {
+import { AnyAction } from "redux";
+import { MessagesState, Message, MessageView } from "../../interfaces/Message";
+
+const initialState: MessagesState = {
   messages: [],
   message: null,
   isLoadingList: true,
@@ -18,7 +21,7 @@ export const SET_LOADING = "message/SET_LOADING";
 export const SET_LOADING_LIST = "message/SET_LOADING_LIST";
 
 
-export const messageReducer = (state = initialState, action) => {
+export const messageReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case SET_MESSAGES:
       return {
@@ -66,14 +69,14 @@ export const messageReducer = (state = initialState, action) => {
 export default messageReducer
 
 //Action Creators
-export const setMessagesAction = (messages) => {
+export const setMessagesAction = (messages: Message[]) => {
   return {
     type: SET_MESSAGES,
     payload: messages
   }
 }
 
-export const setMessageAction = (message) => {
+export const setMessageAction = (message: MessageView) => {
   return {
     type: SET_MESSAGE,
     payload: message
@@ -92,17 +95,17 @@ export const clearMessageAction = () => {
   }
 }
 
-export const setLoadingAction = (bool) => {
+export const setLoadingAction = (isLoading: boolean) => {
   return {
     type: SET_LOADING,
-    payload: bool
+    payload: isLoading
   }
 }
 
-export const setLoadingListAction = (bool) => {
+export const setLoadingListAction = (isLoading: boolean) => {
   return {
     type: SET_LOADING_LIST,
-    payload: bool
+    payload: isLoading
   }
 }
 
@@ -113,14 +116,14 @@ export const getMessagesListAction = () => {
   }
 }
 
-export const getMessageDataAction = (messages) => {
+export const getMessageDataAction = (messages: Message[]) => {
   return {
     type: GET_MESSAGES_DATA,
     payload: messages
   }
 }
 
-export const getOneMessageDataAction = (messageId) => {
+export const getOneMessageDataAction = (messageId: number) => {
   return {
     type: GET_MESSAGE_DATA,
     payload: messageId

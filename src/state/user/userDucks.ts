@@ -1,7 +1,9 @@
 import "firebase/auth"
+import { Action, AnyAction } from "redux"
+import { User, UserState } from "../../interfaces/User"
 
 //Inital State for User 
-const initialState = {
+const initialState: UserState = {
   isAuth: false,
   user: {
     email: '',
@@ -21,7 +23,7 @@ export const LOG_OUT = "user/LOG_OUT"
 export const FIREBASE_LOGIN = "user/FIREBASE_LOGIN"
 
 //Reducer function
-const userReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case SET_USER:
       return {
@@ -52,10 +54,10 @@ export const signupAction = () => {
   }
 }
 
-export const loginAction = (payload) => {
+export const loginAction = (action: Action) => {
   return {
     type: LOG_IN,
-    payload: payload
+    payload: action
   }
 }
 
@@ -65,21 +67,21 @@ export const logoutUserAction = () => {
   }
 }
 
-export const setUserAction = (payload) => {
+export const setUserAction = (user: User) => {
   return {
     type: SET_USER,
-    payload: payload
+    payload: user
   }
 }
 
-export const clearUserAction = (payload) => {
+export const clearUserAction = () => {
   return {
     type: CLEAR_USER
   }
 }
 
 //Side-Effects
-export const handleFirebaseLoginAction = (id_token, access_token) => {
+export const handleFirebaseLoginAction = (id_token: string, access_token: string) => {
   return {
     type: FIREBASE_LOGIN,
     payload: {

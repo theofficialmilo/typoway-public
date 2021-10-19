@@ -1,4 +1,7 @@
-const initialState = {
+import { Action, AnyAction } from "redux"
+import { LibraryState, Template } from "../../interfaces/Library"
+
+const initialState: LibraryState = {
   isLoading: true,
   list: [],
 }
@@ -12,7 +15,7 @@ export const SET_LOADING = "template/SET_LOADING"
 
 
 //Main Reducer
-const templateReducer = (state = initialState, action) => {
+const templateReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case SET_LIST:
       return {
@@ -40,17 +43,17 @@ const templateReducer = (state = initialState, action) => {
 export default templateReducer
 
 //Redux Action Creators
-export const setListAction = (payload) => {
+export const setListAction = (templateList: Template[]) => {
   return {
     type: SET_LIST,
-    payload: payload
+    payload: templateList
   }
 }
 
-export const setLoadingAction = (payload) => {
+export const setLoadingAction = (isLoading: boolean) => {
   return {
     type: SET_LOADING,
-    payload: payload
+    payload: isLoading
   }
 }
 
@@ -61,9 +64,9 @@ export const clearListAction = () => {
 }
 
 //Saga Connector
-export const getListAction = (email) => {
+export const getListAction = (action: Action) => {
   return {
     type: GET_LIST,
-    payload: email
+    payload: action
   }
 }
