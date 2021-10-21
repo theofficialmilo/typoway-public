@@ -37,8 +37,8 @@ function App() {
 
   const initClient = useCallback(() => {
     window.gapi.client.init({
-      apiKey: 'AIzaSyC_YGIEP_sfw3fvgcVzkdmeYCM8Hffhbdk',
-      clientId: '277440582792-gr130fr9ptgu2t7tafcq317dceaepe0p.apps.googleusercontent.com',
+      apiKey:  process.env.REACT_APP_GOOGLE_API_KEY,
+      clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
       scope: "https://mail.google.com/",
       discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"]
     }).then(() => {

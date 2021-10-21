@@ -69,7 +69,7 @@ export const messageReducer = (state = initialState, action: AnyAction) => {
 export default messageReducer
 
 //Action Creators
-export const setMessagesAction = (messages: Message[]) => {
+export const setMessagesAction = (messages: Message) => {
   return {
     type: SET_MESSAGES,
     payload: messages
@@ -116,7 +116,7 @@ export const getMessagesListAction = () => {
   }
 }
 
-export const getMessageDataAction = (messages: Message[]) => {
+export const getMessageDataAction = (messages: gapi.client.Response<gapi.client.gmail.ListMessagesResponse>) => {
   return {
     type: GET_MESSAGES_DATA,
     payload: messages

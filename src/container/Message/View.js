@@ -8,7 +8,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 
 import { getHeader, removeQuote, formatDate } from "../../utils/helper"
 
-import { clearMessageAction } from '../../state/message/messageDucks';
+import { clearMessageAction } from '../../state/sendbox/sendboxDucks';
 
 import Mail from '../../assets/e-mail.json'
 

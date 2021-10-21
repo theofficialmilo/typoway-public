@@ -1,15 +1,17 @@
 import { call, put } from 'redux-saga/effects'
-import { getTemplateList } from '../../service/templateServices'
 
-import { setListAction, setLoadingAction } from './templateDucks'
 import { setAlertAction } from '../app/appDucks';
-import { Template } from '../../interfaces/Library';
 
-export function* handleGetList(action: { payload: string }) {
+import { setListAction, setLoadingAction } from './libraryDucks'
+import { getTemplateList } from '../../service/libraryServices'
+
+import { Template } from '../../interfaces/Library';
+import { FQuerySnapshot } from '../../interfaces/TypeHelper';
+
+export function* handleGetList(action: {type:string, payload: string }) {
   try {
     yield put(setLoadingAction(true));
-
-    const response: firebase.default.firestore.QuerySnapshot = yield call(getTemplateList, action.payload);
+    const response: FQuerySnapshot = yield call(getTemplateList, action.payload);
     var data: Template[] = [];
     response.forEach(doc => {
       const responseData = doc.data();

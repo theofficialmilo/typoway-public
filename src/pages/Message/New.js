@@ -9,7 +9,7 @@ import Skeleton from '@material-ui/lab/Skeleton'
 
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
 
-import { getTemplate } from '../../service/templateServices';
+import { getTemplate } from '../../service/libraryServices';
 import { sendMessage } from '../../service/messageServices';
 import { setAlertAction } from '../../state/app/appDucks';
 
@@ -178,7 +178,7 @@ const New = ({ history, location }) => {
           className={classes.editor}
           initialValue={templateHtml}
           outputFormat='html'
-          apiKey={'c3do1o6m21wc7timbtoig1s5jfkckjrt66oh34119uspxg2f'}
+          apiKey={process.env.REACT_APP_TINYMCE_KEY}
           init={{
             visual: false,
             width: '100%',

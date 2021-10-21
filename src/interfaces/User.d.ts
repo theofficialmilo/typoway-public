@@ -1,7 +1,7 @@
 export interface User{
-  name: string | null,
-  email: string | null,
-  iconUrl: string | null
+  name: string ,
+  email: string ,
+  iconUrl: string 
 }
 
 export interface FirebaseAuthUser extends User {

@@ -7,7 +7,7 @@ import {DialogForm, NameDialog} from '../../container/Editor/DialogForm'
 import EditorContainer from '../../container/Editor/Editor'
 import DialogBack from '../../components/DialogConfirmation'
 
-import { getDefaultTemplate, getTemplate, createTemplate, updateTemplate } from '../../service/templateServices'
+import { getDefaultTemplate, getTemplate, createTemplate, updateTemplate } from '../../service/libraryServices'
 import { getTemplate as getStoreTemplate } from '../../service/storeServices'
 import { setAlertAction } from '../../state/app/appDucks'
 
@@ -29,7 +29,7 @@ const Editor = ({ history, location }) => {
     dataHtml: ''
   })
 
-  const templateList = useSelector((state) => state.template.templateList)
+  const templateList = useSelector((state) => state.library.templateList)
 
   useEffect(() => {
     //Edit an current template

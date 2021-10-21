@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Card, CardHeader, CardContent, Grid, Button, makeStyles } from '@material-ui/core'
 
-import { getMessagesListAction } from '../../state/message/messageDucks';
+import { getMessagesListAction } from '../../state/sendbox/sendboxDucks';
 import MessageList from '../../container/Message/MessageList';
 import MessageView from '../../container/Message/View'
 
@@ -50,7 +50,7 @@ const Message = ({ history }) => {
     dispatch(getMessagesListAction())
   }, [dispatch])
 
-  const { messages, isLoadingList, message, isLoading } = useSelector(state => state.message)
+  const { messages, isLoadingList, message, isLoading } = useSelector(state => state.sendbox)
 
   const handleSubmit = (e) => {
     e.preventDefault();

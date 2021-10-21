@@ -24,7 +24,7 @@ export interface Template {
   }
 }
 
-export interface Marketplace {
+export interface MarketplaceState {
   templates: Template[],
   contributors: Contributor[],
   isLoading: boolean

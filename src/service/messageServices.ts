@@ -8,7 +8,7 @@ export const getMessages = () => {
 }
 
 //Sends a request to Gapi to get messageData according to the id
-export const getMessageData = (payload) => {
+export const getMessageData = (payload: string) => {
   return window.gapi.client.gmail.users.messages.get({
     userId: 'me',
     id: payload
@@ -16,7 +16,7 @@ export const getMessageData = (payload) => {
 }
 
 //Sends a request to Gapi to send an email
-export const sendMessage = (payload) => {
+export const sendMessage = (payload: string) => {
   return window.gapi.client.gmail.users.messages.send({
     userId: 'me',
     resource: {

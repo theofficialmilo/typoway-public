@@ -9,10 +9,10 @@ import { Add as AddIcon } from '@material-ui/icons'
 import TemplateList from '../../container/Library/TemplateList'
 import DialogConfirm from '../../components/DialogConfirmation'
 
-import { getListAction } from '../../state/template/templateDucks'
+import { getListAction } from '../../state/library/libraryDucks'
 import { setAlertAction } from '../../state/app/appDucks';
 
-import { deleteTemplate, getTemplate } from '../../service/templateServices';
+import { deleteTemplate, getTemplate } from '../../service/libraryServices';
 
 import { dialogDeleteData } from '../../utils/data';
 import { requestDownload } from '../../utils/helper';
@@ -58,7 +58,7 @@ const Library = ({ history }) => {
     const [anchorEl, setAnchorEl] = useState(false);
 
     let userEmail = useSelector(state => state.user.user.email);
-    let template = useSelector((state) => state.template);
+    let template = useSelector((state) => state.library);
 
     useEffect(() => {
         dispatch(getListAction(userEmail));

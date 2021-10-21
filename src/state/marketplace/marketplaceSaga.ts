@@ -1,14 +1,18 @@
 import {call, put} from 'redux-saga/effects'
-import { Contributor, Template } from '../../interfaces/Marketplace';
-import { getTemplateList, getTopContributors } from '../../service/storeServices'
+
+import { FQuerySnapshot } from '../../interfaces/TypeHelper';
+
 import { setAlertAction } from '../app/appDucks';
+
+import { Contributor, Template } from '../../interfaces/Marketplace';
 import { setContributorsAction, setIsLoading, setTemplatesAction } from './marketplaceDucks';
+import { getTemplateList, getTopContributors } from '../../service/storeServices'
 
 export function* handleGetMarketplaceData () {
   try{
     yield put(setIsLoading(true));
-    const listResponse: firebase.default.firestore.QuerySnapshot = yield call(getTemplateList);
-    const contributorResponse: firebase.default.firestore.QuerySnapshot = yield call(getTopContributors);
+    const listResponse: FQuerySnapshot = yield call(getTemplateList);
+    const contributorResponse: FQuerySnapshot = yield call(getTopContributors);
     
     var templateList: Template[]=[]
     listResponse.forEach((doc) => {

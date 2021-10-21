@@ -1,4 +1,4 @@
-import { InsertDriveFileOutlined, Dashboard, Message, Store, Folder, Star, Forum, Announcement, ListAlt } from '@material-ui/icons'
+import { InsertDriveFileOutlined, Dashboard, Message, Store, Star, Forum, Announcement, ListAlt } from '@material-ui/icons'
 import { DesignTypeData, DialogData, NavData } from '../interfaces/Ui';
 
 export const dialogDeleteData: Function = (): DialogData => {

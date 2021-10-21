@@ -1,8 +1,7 @@
 import { AnyAction } from "redux";
-import { Contributor, Marketplace, Template } from "../../interfaces/Marketplace";
+import { Contributor, MarketplaceState, Template } from "../../interfaces/Marketplace";
 
-
-const initialState: Marketplace = {
+const initialState: MarketplaceState = {
   templates: [],
   contributors: [],
   isLoading: true,

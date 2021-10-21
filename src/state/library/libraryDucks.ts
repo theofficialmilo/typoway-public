@@ -1,18 +1,18 @@
-import { Action, AnyAction } from "redux"
+import { AnyAction } from "redux"
 import { LibraryState, Template } from "../../interfaces/Library"
 
+//To store user's list of templates and handle loading
 const initialState: LibraryState = {
   isLoading: true,
   list: [],
 }
 
 //Action Types
-const SET_LIST = "template/SET_LIST"
-const CLEAR_LIST = "template/CLEAR_LIST"
+const SET_LIST = "template/SET_LIST";
+const CLEAR_LIST = "template/CLEAR_LIST";
 
-export const GET_LIST = "template/GET_LIST"
-export const SET_LOADING = "template/SET_LOADING"
-
+export const GET_LIST = "template/GET_LIST";
+export const SET_LOADING = "template/SET_LOADING";
 
 //Main Reducer
 const templateReducer = (state = initialState, action: AnyAction) => {
@@ -64,9 +64,9 @@ export const clearListAction = () => {
 }
 
 //Saga Connector
-export const getListAction = (action: Action) => {
+export const getListAction = (emailId: string) => {
   return {
     type: GET_LIST,
-    payload: action
+    payload: emailId
   }
 }

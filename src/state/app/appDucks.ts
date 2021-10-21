@@ -1,6 +1,8 @@
 import { AnyAction } from "redux"
 import { App, Alert } from "../../interfaces/App"
 
+//To manage Global loading and snackbar alerts
+
 const initialState: App = {
   isLoading: false,
   alert: {
@@ -30,7 +32,6 @@ const appReducer = (state = initialState, action:AnyAction) => {
           message: action.payload.message
         }
       }
-
     case CLEAR_ALERT:
       return {
         ...state,
@@ -40,7 +41,6 @@ const appReducer = (state = initialState, action:AnyAction) => {
           message: ''
         }
       }
-
     default:
       return state
   }
@@ -55,10 +55,10 @@ export const setIsLoadingAction = (isLoading: boolean) => {
   }
 }
 
-export const setAlertAction = (data: Alert) => {
+export const setAlertAction = (alert: Alert) => {
   return {
     type: SET_ALERT,
-    payload: data
+    payload: alert
   }
 }
 

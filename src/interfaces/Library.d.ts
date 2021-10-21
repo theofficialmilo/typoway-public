@@ -1,5 +1,5 @@
 export interface Template {
-  id: string,
+  id?: string,
   name: string,
   templateType: number,
   accountId?: string,
@@ -8,11 +8,11 @@ export interface Template {
   createdOn?: {
     seconds:number,
     nanoseconds: number
-  },
+  } | Date,
   updatedOn?: {
     seconds: number,
     nanoseconds: number
-  }
+  } | Date
 }
 
 export interface LibraryState{

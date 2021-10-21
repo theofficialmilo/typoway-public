@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { List, makeStyles } from "@material-ui/core"
 
 import { EmptyRow, Row } from './Row'
-import { getOneMessageDataAction } from '../../state/message/messageDucks'
+import { getOneMessageDataAction } from '../../state/sendbox/sendboxDucks'
 
 const useStyles = makeStyles(theme => ({
   list: {
