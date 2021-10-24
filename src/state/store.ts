@@ -28,4 +28,6 @@ const composeEnhancers = (process.env.NODE_ENV !== 'production' && typeof window
 const store = createStore(reducer, {}, composeEnhancers(applyMiddleware(...middleware)));
 sagaMiddleWare.run(watcherSaga);
 
+export type RootState = ReturnType<typeof store.getState>
+
 export default store

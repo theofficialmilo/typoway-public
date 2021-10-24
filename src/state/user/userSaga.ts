@@ -44,10 +44,8 @@ export function* handleLogin() {
       yield put(setUserAction(user))
     }
     }
+    yield put(setAlertAction({type: 'success', message: 'Login Successful'}));
     yield put(setIsLoadingAction(false));
-    // NOTE:
-    //yield login successful 
-
   } catch (error: any) {
     yield put(setAlertAction({ type: 'error', message: JSON.parse(error.message).error.message }))
   }
@@ -62,7 +60,6 @@ export function* handleLogout() {
     yield put(clearUserAction())
     yield put(setAlertAction({ type: 'info', message: 'You have been logged out!'}))
   } catch (error) {
-    console.log(error)
     yield put(setAlertAction({ type: 'error', message: 'Something went wrong. Please try again later' }))
   }
 }

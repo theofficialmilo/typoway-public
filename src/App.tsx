@@ -2,18 +2,19 @@ import React, { Suspense, useEffect, useCallback, lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Hidden, Typography } from '@material-ui/core';
 
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute'
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import { AlertProps } from '@material-ui/lab';
 
 import Loading from './components/Loading'
 import BreakpointWarn from './components/BreakpointWarn';
 
 import { loginAction } from './state/user/userDucks'
 import { clearAlertAction, setAlertAction } from './state/app/appDucks';
-
+import { RootState } from './state/store';
 
 const Auth = lazy(() => import('./pages/Auth'));
 const Privacy = lazy(() => import('./pages/Privacy'));
@@ -22,11 +23,10 @@ const Home = lazy(() => import('./pages/Home'));
 
 function App() {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const updateSigninStatus = useCallback((isSignedIn) => {
     if (isSignedIn) {
-      dispatch(loginAction({ history: history }))
+      dispatch(loginAction)
     }
     else {
       if (isSignedIn !== false) {
@@ -55,9 +55,9 @@ function App() {
     })();
   }, [initClient]);
 
-  let alert = useSelector((state) => state.app.alert)
+  let alert = useSelector((store:RootState) => store.app.alert)
 
-  const Alert = (props) => {
+  const Alert = (props: AlertProps) => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
 
