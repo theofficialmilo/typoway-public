@@ -15,7 +15,20 @@ export interface Template {
   } | Date
 }
 
+export interface CreateTemplateForm{
+  name: string,
+  templateType: number,
+  designType?: number,
+  dataJson?: string
+}
+
+export interface StoredTemplate extends Template{
+  id: string
+}
+
 export interface LibraryState{
   isLoading: boolean,
-  list: Template[] | undefined
+  list: Template[] | undefined,
+  editorTemplate: Template | null,
+  editorIsLoading: boolean
 }

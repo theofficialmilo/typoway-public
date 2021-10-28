@@ -2,7 +2,7 @@ import { Update } from '../interfaces/Updates';
 import { db } from '../utils/firebase';
 
 //Gets list of updates 
-export const getNewsList = (email: string) => {
+export const getNewsList = () => {
   return db.collection("news").orderBy("createdOn", "desc").get()
     .then((querySnapshot) => {
       const updateList: Update[] = []
@@ -17,7 +17,4 @@ export const getNewsList = (email: string) => {
       })
       return updateList
     })
-    .catch(err =>
-      console.log(err)
-    )
 }

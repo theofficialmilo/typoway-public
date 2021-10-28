@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-
 import { Card, CardHeader, CardContent, CardActions, Typography, List, IconButton } from '@material-ui/core'
 import { Email, LinkedIn, GitHub } from '@material-ui/icons'
-import makeStyles from '@material-ui/styles/makeStyles'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 
-import Post from '../../components/Auth/Post'
-import { getNewsList } from '../../service/updatesServices'
-import { setAlertAction } from '../../state/app/appDucks'
+import Update, {SkeletonUpdate} from './UpdateItem'
+import useUpdates from '../../hooks/Auth/useUpdates'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,15 +26,7 @@ const useStyles = makeStyles(theme => ({
 
 const News = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    getNewsList()
-      .then(resp => setData(resp))
-      .catch(err => dispatch(setAlertAction({ type: 'error', message: err })))
-  }, [])
+  const { data } = useUpdates();
 
   return (
     <Card className={classes.root}>
@@ -49,9 +37,9 @@ const News = () => {
         <List className={classes.list}>
           {data.length !== 0 ?
             data.map((post, index) => (
-              <Post key={index} data={post} index={index} />
+              <Update data={post} key={index} index={index} />
             )) :
-            <Post isLoading={true} index={0} />
+            <SkeletonUpdate />
           }
         </List>
       </CardContent>

@@ -1,14 +1,13 @@
-import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Box from '@material-ui/core/Box'
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import Header from '../container/Header'
-import Sidebar from '../container/Sidebar'
+import Header from '../components/App/Header'
+import Sidebar from '../components/App/Sidebar'
 
-import ViewLibrary from './Library/Index'
-import Editor from './Library/Editor'
+import LibraryView from './Library/LibraryView'
+import EditorView from './Library/EditorView'
 import New from './Message/New';
 import Message from './Message/Index';
 import Marketplace from './Marketplace/Index'
@@ -43,8 +42,8 @@ const Home = () => {
           <Route path ="/store/:type/:value?" render={(props) => <Marketplace {...props}/>} />
           <Route exact path="/message" render={(props) => <Message {...props} />} />
           <Route exact path="/message/new" render={(props) => <New {...props} />} />
-          <Route exact path="/library" render={(props) => <ViewLibrary {...props} />} />
-          <Route exact path="/library/editor" render={(props) => <Editor {...props} />} />
+          <Route exact path="/library" render={(props) => <LibraryView {...props} />} />
+          <Route exact path="/library/editor" render={(props) => <EditorView {...props} />} />
         </Switch>
       </main>
     </Box>

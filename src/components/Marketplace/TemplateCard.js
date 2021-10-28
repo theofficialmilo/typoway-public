@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 export const TemplateCard = ({id, imgUrl, price, title, userName, templateType, handleOnClick}) => {
   const classes = useStyles();
   const history = useHistory();
-  const templateData = templateTypeData();
+  const templateData = templateTypeData;
 
   const handleOnSave = () => {
     history.push({

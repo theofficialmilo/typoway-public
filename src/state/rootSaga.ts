@@ -6,8 +6,8 @@ import { LOG_OUT, LOG_IN } from './user/userDucks'
 import { GET_MESSAGES, GET_MESSAGES_DATA, GET_MESSAGE_DATA } from './sendbox/sendboxDucks'
 import { handleGetMessages, handleGetMessagesData, handleGetOneMessageData } from './sendbox/sendboxSaga'
 
-import { GET_LIST } from './library/libraryDucks'
-import { handleGetList } from './library/librarySaga'
+import { CREATE_TEMPLATE, GET_LIST } from './library/libraryDucks'
+import { handleCreateTemplate, handleGetList } from './library/librarySaga'
 
 import { GET_MARKETPLACE_DATA } from './marketplace/marketplaceDucks'
 import { handleGetMarketplaceData } from './marketplace/marketplaceSaga'
@@ -24,6 +24,7 @@ export function* watcherSaga() {
 
   //Library Side Effects
   yield takeLatest(GET_LIST, handleGetList);
+  yield takeLatest(CREATE_TEMPLATE, handleCreateTemplate)
 
   //Marketplace Side Effects
   yield takeLatest(GET_MARKETPLACE_DATA, handleGetMarketplaceData)

@@ -1,6 +1,4 @@
-import React from 'react'
 import {Box, makeStyles, LinearProgress} from '@material-ui/core'
-
 import Logo from './Logo'
 
 const useStyles = makeStyles(theme => ({
@@ -23,8 +21,8 @@ const Loading = () => {
 
   return (
     <Box className={classes.root}>
-        <Logo />
-        <LinearProgress className={classes.progressBar}/>
+      <Logo size="large"/>
+      <LinearProgress className={classes.progressBar}/>
     </Box>
   )
 }

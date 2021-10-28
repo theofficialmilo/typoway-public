@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
+import { Toolbar, AppBar, Typography, IconButton, Button, Avatar, Popover, CardContent, CardActions} from '@material-ui/core'
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { Toolbar, AppBar, Typography, IconButton, Button, Avatar, Popover, CardContent, CardActions, makeStyles } from '@material-ui/core'
-
-import Logo from '../assets/logo.png'
-
-import { useDispatch, useSelector } from 'react-redux'
-import { logoutUserAction } from '../state/user/userDucks'
+import Logo from '../../assets/logo.png'
+import useHeader from '../../hooks/App/useHeader'
 
 const useStyles = makeStyles((theme) => ({
   logoDiv: {
@@ -42,26 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Header = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const user = useSelector(state => state.user.user)
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-
-  const handleSignOut = (e) => {
-    e.preventDefault();
-    dispatch(logoutUserAction());
-  }
+  const { anchorEl, open, user, handleClick, handleClose, handleSignOut} = useHeader();
 
   return (
     <AppBar elevation={0} color="transparent" position='static'>
@@ -71,14 +49,14 @@ export const Header = () => {
           <Typography variant='h5'>Typoway</Typography>
         </div>
         <div>
-          <IconButton edge='end' onClick={handleClick}>
+          <IconButton edge='end' onClick={(e) => handleClick(e)}>
             <Avatar alt={user.name} src={user.iconUrl}>{user.name.charAt(0)}</Avatar>
           </IconButton>
           <Popover
             id='user-popover'   
             open={open}
             anchorEl={anchorEl}
-            onClose={handleClose}
+            onClose={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleClose(e)}
             elevation={4}
             anchorOrigin={{
               vertical: 'bottom',

@@ -63,7 +63,7 @@ const TemplateDialog = ({id, open, handleClose, handleSave, handleUser}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [template, setTemplate] = useState(null);
-  const templateData = templateTypeData();
+  const templateData = templateTypeData;
   
   useEffect(()=> {
     if(open) {

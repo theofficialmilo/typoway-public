@@ -31,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-
-//Data Constants
-const templateType = templateTypeData();
-
 const Header = ({ loading, handleSave, handleBack, templateData }) => {
   const classes = useStyles();
 
@@ -52,7 +48,7 @@ const Header = ({ loading, handleSave, handleBack, templateData }) => {
         </Typography>
         <Divider orientation='vertical' className={classes.divider} variant='middle' />
         <Typography color='secondary'>
-          {!loading ? templateType[templateData.templateType] : <Skeleton width={75} />}
+          {!loading ? templateTypeData[templateData.templateType] : <Skeleton width={75} />}
         </Typography>
       </Box>
       <div className={classes.buttonDiv}>

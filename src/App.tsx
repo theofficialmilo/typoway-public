@@ -26,7 +26,7 @@ function App() {
 
   const updateSigninStatus = useCallback((isSignedIn) => {
     if (isSignedIn) {
-      dispatch(loginAction)
+      dispatch(loginAction())
     }
     else {
       if (isSignedIn !== false) {

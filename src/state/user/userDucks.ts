@@ -1,5 +1,5 @@
 import "firebase/auth"
-import { Action, AnyAction } from "redux"
+import { AnyAction } from "redux"
 import { User, UserState } from "../../interfaces/User"
 
 //Inital State for User 
@@ -54,10 +54,9 @@ export const signupAction = () => {
   }
 }
 
-export const loginAction = (action: Action) => {
+export const loginAction = () => {
   return {
-    type: LOG_IN,
-    payload: action
+    type: LOG_IN
   }
 }
 

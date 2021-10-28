@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Box, Paper } from '@material-ui/core'
 
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -15,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const MainSection = (props) => {
+const MainSection = (props: any) => {
   const classes = useStyles();
   return (
     <Paper elevation={0} className={classes.root}>

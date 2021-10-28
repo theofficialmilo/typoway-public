@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { List, makeStyles } from '@material-ui/core'
 
-import { useLocation } from 'react-router'
-
-import ListItemLink from '../components/ListItemLink'
-import { mainNav } from '../utils/data'
+import ListItemLink from '../ListItemLink'
+import useSidebar from '../../hooks/App/useSidebar'
 
 const useStyles = makeStyles((theme) => ({
   listComponent: {
@@ -24,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
     height: '72px'
   },
   listItemButton: {
-    flexDirection: 'column',
     width: '72px',
     height: '72px',
+    flexDirection: 'column',
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
@@ -40,18 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Sidebar = () => {
   const classes = useStyles();
-  const [active, setActive] = useState("Store");
-  const location = useLocation();
-
-  useEffect(() => {
-    mainNav.map((entry) => {
-      if(location.pathname.includes(entry.link)) setActive(entry.title)
-    })
-  }, [location])
-
-  const handleOnClick = (e) => {
-    setActive(e.currentTarget.id)
-  }
+  const {active, mainNav, handleOnClick} = useSidebar();
 
   return (
     <List disablePadding component="nav" className={classes.listComponent}>

@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { Grow } from '@material-ui/core'
 
-import {DialogForm, NameDialog} from '../../container/Editor/DialogForm'
+import CreateDialog from '../../components/Editor/CreateDialog'
+import NameDialog from '../../components/Editor/NameDialog'
+
 import EditorContainer from '../../container/Editor/Editor'
 import DialogBack from '../../components/DialogConfirmation'
 
@@ -48,15 +50,7 @@ const Editor = ({ history, location }) => {
       }
       //From Store
       else if(location.state.store !== undefined){
-        getStoreTemplate(location.state.store)
-        .then(template => {
-          setTemplateData(prevState => ({
-            ...prevState,
-            templateType: template.templateType,
-            dataJson: template.data
-          }))
-          setShowNameDialog(true)
-        })
+        setShowNameDialog(true)
       }
     }
     //Create a new Template
@@ -73,51 +67,13 @@ const Editor = ({ history, location }) => {
     }
   }, [templateData])
 
-  const handleCreateTemplate = async (formData) => {
-    let data = null;
-    if (formData.designType === 1) {
-      try{
-        data = await getDefaultTemplate(formData.templateType.toString())
-      } 
-      catch(err){
-        console.log(err)
-      }
-    }
-    const dataTemp = {
-      ...formData,
-      dataJson: data
-    }
-    createTemplate(dataTemp)
-      .then(id => {
-        setTemplateData(prevState => ({
-          ...prevState,
-          ...dataTemp,
-          id: id
-        }))
-      })
-    setLoading(false);
-  }
-
-  const handleStoreTemplate = (name) => {
-    const data = {
-      ...templateData,
-      name: name
-    }
-    createTemplate(data)
-      .then(id => {
-        setTemplateData(prevState => ({
-          ...prevState,
-          ...data,
-          id: id
-        }))
-      })
-    setLoading(false);
-    setShowNameDialog(false);
-  }
-
   const handleDialogFormClose = (e) => {
     e.preventDefault();
     setShowDialogForm(false)
+  }
+
+  const handleNameDialogClose = () => {
+    setShowNameDialog(false);
   }
 
   const handleOnSave = (data) => {
@@ -138,16 +94,6 @@ const Editor = ({ history, location }) => {
 
   return (
     <>
-      <DialogForm
-        isOpen={showDialogForm}
-        handleOnSubmit={handleCreateTemplate}
-        handleOnClose={(e) => handleDialogFormClose(e)}
-      />
-      <NameDialog 
-        isOpen={showNameDialog}
-        handleOnSubmit={handleStoreTemplate}
-      />
-      <DialogBack isOpen={showDialogBack} data={dialogBackData} handleCancel={() => setShowDialogBack(false)} handleClick={handleBack} />
       <Grow in={true} mountOnEnter unmountOnExit>
         <EditorContainer
           loading={loading}
@@ -157,6 +103,20 @@ const Editor = ({ history, location }) => {
           handleBack={e => handleBack(e)}
         />
       </Grow>
+      <CreateDialog
+        isOpen={showDialogForm}
+        handleOnClose={(e) => handleDialogFormClose(e)}
+      />
+      <NameDialog 
+        isOpen={showNameDialog}
+        templateId={location.state.store}
+        handleOnClose={handleNameDialogClose}
+      />
+      <DialogBack 
+        isOpen={showDialogBack} 
+        data={dialogBackData} 
+        handleCancel={() => setShowDialogBack(false)} handleClick={handleBack} 
+      />
     </>
   )
 }

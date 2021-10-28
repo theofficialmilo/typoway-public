@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Index = () => {
+const Index = ({...props}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [selected, setSelected] = useState('Featured');

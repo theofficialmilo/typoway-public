@@ -68,7 +68,7 @@ export const requestDownload = (resp:any) => {
 }
 
 export const categoryConverter = (string: string) => {
-  const template = templateTypeData();
+  const template = templateTypeData;
   const value = template.indexOf(string.charAt(0).toUpperCase() + string.slice(1))
   return value
 }

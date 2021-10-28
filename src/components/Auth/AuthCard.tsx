@@ -1,11 +1,10 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
 import { Paper, makeStyles, Typography, Button, Divider, CircularProgress, List, ListItem, ListSubheader, Link } from '@material-ui/core'
 
 import { Link as RouterLink } from 'react-router-dom'
 
-import LogoComp from '../../components/Logo'
+import LogoComp from '../Logo'
 import googleLogo from '../../assets/googleLogo.png'
+import useAuth from '../../hooks/Auth/useAuth'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,14 +36,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const handleSignUp = () => {
-  window.gapi.auth2.getAuthInstance().signIn();
-}
-
-const AuthForm = () => {
+const AuthCard = () => {
   const classes = useStyles();
-
-  let isLoading = useSelector((state) => state.app.isLoading)
+  const {isLoading, handleSignUp} = useAuth();
 
   return (
     <Paper className={classes.root} elevation={2}>
@@ -88,7 +82,7 @@ const AuthForm = () => {
           startIcon={!isLoading && (<img src={googleLogo} alt='gIcon' width='24' height='24' />)}
           fullWidth
           variant='contained'
-          onClick={handleSignUp}>
+          onClick={(e) => handleSignUp(e)}>
           {!isLoading ?
             'Login with Google' :
             (<CircularProgress size={24} />)
@@ -112,4 +106,4 @@ const AuthForm = () => {
   )
 }
 
-export default AuthForm
+export default AuthCard
