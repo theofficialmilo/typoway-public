@@ -4,7 +4,7 @@ import { call, put } from 'redux-saga/effects'
 import { setAlertAction } from '../app/appDucks';
 
 import { setEditorLoadingAction, setListAction, setLoadingAction, setTemplateAction } from './libraryDucks'
-import { createTemplate, getDefaultTemplate, getTemplateList } from '../../service/libraryServices'
+import { createTemplate, getDefaultTemplate, getTemplate, getTemplateList } from '../../service/libraryServices'
 
 import { CreateTemplateForm, StoredTemplate, Template } from '../../interfaces/Library';
 import { FQuerySnapshot, FDocumentSnapshot, FDocumentData } from '../../interfaces/TypeHelper';
@@ -61,6 +61,37 @@ export function* handleCreateTemplate(action: {type: string, payload: CreateTemp
   }
     //Update Template Id
   }catch(error: any){
+    yield put(setAlertAction({ type: 'error', message: error.message }))
+  }
+}
+
+export function* handleEditTemplate(action: {type: string, payload: string}) {
+  try{
+    //Set Editor Loading to true
+    
+    //Get template Data from Firebase
+    const response:firebase.default.firestore.QueryDocumentSnapshot = yield call(getTemplate, action.payload)
+    if(response.exists) {
+      const data: FDocumentData = response.data();
+      if(data !== undefined) {
+        const template: Template = {
+          id: response.id,
+          accountId: data.accountId,
+          name: data.name,
+          templateType: data.templateType,
+          dataJson: data.dataJson,
+          dataHtml: data.dataHtml,
+          createdOn: data.createdOn,
+          updatedOn: data.updatedOn
+        }
+        console.log(template);
+        yield put(setTemplateAction(template));
+      }
+    }
+
+    //Set Template into redux state
+    //Set Loading false
+  } catch(error:any) {
     yield put(setAlertAction({ type: 'error', message: error.message }))
   }
 }

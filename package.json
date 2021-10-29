@@ -12,7 +12,6 @@
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
 		"@tinymce/tinymce-react": "^3.12.6",
-		"@types/material-ui": "^0.21.12",
 		"babel-jest": "^26.6.0",
 		"dompurify": "^2.3.0",
 		"firebase": "^8.6.7",
@@ -64,6 +63,8 @@
 		"@types/node": "^16.11.1",
 		"@types/react": "^17.0.30",
 		"@types/react-dom": "^17.0.9",
-		"@types/react-router-dom": "^5.3.1"
+		"@types/react-router-dom": "^5.3.1",
+		"@types/material-ui": "^0.21.12",
+		"@types/react-email-editor": "^1.1.2"
 	}
 }

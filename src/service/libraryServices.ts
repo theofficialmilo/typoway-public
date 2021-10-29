@@ -10,24 +10,6 @@ export const getTemplateList = (emailId: string) => {
 //Get individual templateData according to templateId
 export const getTemplate = (id: string) => {
   return db.collection('templates').doc(id).get()
-    .then(doc => {
-      if (doc.exists) {
-        const data: FDocumentData | undefined = doc.data();
-        if(data !== undefined) return{
-          id: doc.id,
-          name: data.name,
-          templateType: data.templateType,
-          dataJson: data.dataJson,
-          dataHtml: data.dataHtml
-        } 
-      }
-      else {
-        return 'Document not found'
-      }
-    })
-    .catch((err) => {
-      return err
-    })
 }
 
 //Sends a request to create a template in Firebase 

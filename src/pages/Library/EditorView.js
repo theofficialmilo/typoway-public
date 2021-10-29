@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { Grow } from '@material-ui/core'
 
@@ -9,83 +9,38 @@ import NameDialog from '../../components/Editor/NameDialog'
 import EditorContainer from '../../container/Editor/Editor'
 import DialogBack from '../../components/DialogConfirmation'
 
-import { getDefaultTemplate, getTemplate, createTemplate, updateTemplate } from '../../service/libraryServices'
-import { getTemplate as getStoreTemplate } from '../../service/storeServices'
 import { setAlertAction } from '../../state/app/appDucks'
 
 import { dialogGoBackData } from '../../utils/data'
+import useEditorView from '../../hooks/Library/useEditorView'
 
 const Editor = ({ history, location }) => {
   const dispatch = useDispatch();
+  const {
+    showCreateDialog,
+    showStoreDialog,
+    showPromptDialog,
+    setShowCreateDialog,
+    setShowStoreDialog,
+    setShowPromptDialog
+  } = useEditorView(location);
 
-  const [loading, setLoading] = useState(true);
-  const [showDialogBack, setShowDialogBack] = useState(false);
-  const [showDialogForm, setShowDialogForm] = useState(false);
-  const [showNameDialog, setShowNameDialog] = useState(false);
-  const [templateData, setTemplateData] = useState({
-    id: null,
-    name: 'Untitle Template',
-    templateType: 0,
-    designType: 1,
-    dataJson: null,
-    dataHtml: ''
-  })
-
-  const templateList = useSelector((state) => state.library.templateList)
-
-  useEffect(() => {
-    //Edit an current template
-    if (location.state !== undefined) {
-      //From User Library
-      if(location.state.template !== undefined) {
-      getTemplate(location.state.template)
-        .then(data => {
-          setTemplateData(prevState => ({
-            ...prevState,
-            ...data
-          }))
-          setShowDialogForm(false)
-          setLoading(false)
-        })
-      }
-      //From Store
-      else if(location.state.store !== undefined){
-        setShowNameDialog(true)
-      }
-    }
-    //Create a new Template
-    else {
-      setShowDialogForm(true);
-    }
-    return () => {}
-  }, [templateList, location.state])
-
-  useEffect(() => {
-    if (templateData.dataJson !== null && templateData.dataHtml !== '') {
-      updateTemplate(templateData)
-      return
-    }
-  }, [templateData])
-
+  //Handlers should only be for dialogs
   const handleDialogFormClose = (e) => {
     e.preventDefault();
-    setShowDialogForm(false)
+    setShowCreateDialog(false)
   }
 
   const handleNameDialogClose = () => {
-    setShowNameDialog(false);
+    setShowStoreDialog(false);
   }
 
   const handleOnSave = (data) => {
-    setTemplateData(prevState => ({
-      ...prevState,
-      dataJson: data.dataJson,
-      dataHtml: data.dataHtml
-    }))
     dispatch(setAlertAction({ type: "success", message: 'Template has been saved!' }))
     handleBack();
   }
 
+  //Handle Redirection of url
   const handleBack = () => {
     history.push('/library')
   }
@@ -96,26 +51,26 @@ const Editor = ({ history, location }) => {
     <>
       <Grow in={true} mountOnEnter unmountOnExit>
         <EditorContainer
-          loading={loading}
-          templateData={templateData}
-          handleOpenConfirmation={() => setShowDialogBack(true)}
+          handleOpenConfirmation={() => setShowPromptDialog(true)}
           handleOnSave={(data) => handleOnSave(data)}
           handleBack={e => handleBack(e)}
         />
       </Grow>
       <CreateDialog
-        isOpen={showDialogForm}
+        isOpen={showCreateDialog}
         handleOnClose={(e) => handleDialogFormClose(e)}
       />
-      <NameDialog 
-        isOpen={showNameDialog}
-        templateId={location.state.store}
-        handleOnClose={handleNameDialogClose}
-      />
-      <DialogBack 
-        isOpen={showDialogBack} 
-        data={dialogBackData} 
-        handleCancel={() => setShowDialogBack(false)} handleClick={handleBack} 
+      {(location.state && location.state.store) &&
+        <NameDialog
+          isOpen={showStoreDialog}
+          templateId={location.state.store}
+          handleOnClose={handleNameDialogClose}
+        />
+      }
+      <DialogBack
+        isOpen={showPromptDialog}
+        data={dialogBackData}
+        handleCancel={() => setShowPromptDialog(false)} handleClick={handleBack}
       />
     </>
   )

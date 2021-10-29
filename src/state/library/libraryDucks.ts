@@ -22,6 +22,8 @@ export const SET_LOADING = "template/SET_LOADING";
 export const CREATE_TEMPLATE = "template/CREATE_TEMPLATE"
 export const SET_EDITOR_LOADING = "tempalte/SET_EDITOR_LOADING"
 
+export const EDIT_TEMPALTE = "template/EDIT_TEMPLATE"
+
 //Main Reducer
 const templateReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
@@ -126,6 +128,9 @@ export const createTemplateAction = (templateForm: CreateTemplateForm) => {
   }
 }
 
-export const editTemplateAction = () => {
-
+export const editTemplateAction = (templateId: string) => {
+  return {
+    type: EDIT_TEMPALTE,
+    payload: templateId
+  }
 }
