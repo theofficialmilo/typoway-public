@@ -1,9 +1,15 @@
-import React from 'react'
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {Grid, Typography} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 import { TemplateCard, SkeletonCard } from '../../components/Marketplace/TemplateCard'
-import Contributor from '../../components/Marketplace/Contributor';
+import ContributorComp from '../../components/Marketplace/Contributor';
+
+import { Contributor, Template } from '../../interfaces/Marketplace';
+import { RootState } from '../../state/store';
+import { setSelectedId } from '../../state/marketplace/marketplaceDucks';
 
 const infoWidth = 340;
 
@@ -32,8 +38,25 @@ const useStyles = makeStyles(theme => ({
   }
 }))
  
-const Featured = ({isLoading, templates, contributors, handleOnMore}) => {
+const Featured = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const {templates, contributors} = useSelector((state: RootState) => state.marketplace)
+
+  useEffect(() => {
+    if(templates && contributors) setIsLoading(false);
+    return () => {
+    }
+  }, [templates])
+
+  const handleOnMore = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if(e.currentTarget.parentElement)
+      dispatch(setSelectedId(e.currentTarget.parentElement.id))
+    
+  }
 
   return (
     <Grid container spacing={2} justifyContent='space-between'>
@@ -41,7 +64,7 @@ const Featured = ({isLoading, templates, contributors, handleOnMore}) => {
         <div style={{position: 'sticky', top: 0}}>
           <Typography variant='h4' paragraph>Unlimited access to Email Designs with a click of a button</Typography>
           <Typography variant='body1' color="secondary" paragraph>Created by designers all over the world, this huge library of template can be used with just a click of a button.<br/> All templates can be use personally or commercially.</Typography>
-          <Contributor contributors={contributors} isLoading={isLoading}/>
+          <ContributorComp contributors={contributors} isLoading={isLoading}/>
         </div>
       </Grid>
       <Grid item container spacing={2} justifyContent='flex-start' className={classes.listDiv}>

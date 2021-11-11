@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
-
 import { Grid } from '@material-ui/core'
 import makeStyles from '@material-ui/core/styles/makeStyles'
+
 import TemplateCard from '../../components/Marketplace/TemplateCard'
-import { categoryConverter } from '../../utils/helper'
+import useByCategoryView from '../../hooks/Marketplace/useByCategoryView'
+
+import { Location } from 'history'
+import { Template } from '../../interfaces/Marketplace'
+import { useLocation } from 'react-router'
 
 const useStyles = makeStyles(theme => ({
   cardDiv: {
@@ -24,17 +26,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const ByCategory = ({location, handleOnMore, templates}) => {
+const ByCategory = ({handleOnMore}: PropTypes) => {
   const classes = useStyles();
-  let {value} = useParams();
-  const [filteredList, setFilteredList] = useState([]);
+  const location = useLocation();
 
-  useEffect(() => {
-    if(value === undefined || templates === undefined) return;
-    const category = categoryConverter(value);
-    const filtered = templates.filter(template => template.templateType === category)
-    setFilteredList(filtered)
-  },[location])
+  const {filteredList} = useByCategoryView(location);
 
   return (
     <Grid container spacing={2} >
@@ -56,3 +52,8 @@ const ByCategory = ({location, handleOnMore, templates}) => {
 }
 
 export default ByCategory
+
+interface PropTypes {
+  location: Location,
+  handleOnMore: React.MouseEventHandler<HTMLButtonElement>,
+}

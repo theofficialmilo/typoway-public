@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Grid, Typography, IconButton, Avatar, Button, ButtonBase} from '@material-ui/core'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import { Close } from '@material-ui/icons'
@@ -59,27 +59,30 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const TemplateDialog = ({id, open, handleClose, handleSave, handleUser}) => {
+const TemplateDialog = ({handleClose, handleSave, handleUser}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [template, setTemplate] = useState(null);
-  const templateData = templateTypeData;
+  const [isOpen, setIsOpen] = useState(false);
+
+  const selectedId = useSelector((state) => state.marketplace.selectedId)
   
   useEffect(()=> {
-    if(open) {
-      getTemplate(id)
+    if(selectedId) {
+      getTemplate(selectedId)
         .then(doc => {
           setTemplate(doc)
+          setIsOpen(true)
         })
         .catch(err => {
           dispatch(setAlertAction({type:'error', message: err.code}))
         })
     }
-  },[open])
+  },[selectedId])
 
 
   return (
-    <Dialog fullWidth maxWidth={'md'} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+    <Dialog fullWidth maxWidth={'md'} onClose={handleClose} aria-labelledby="customized-dialog-title" open={isOpen}>
       {template !== null && 
         <Grid container className={classes.inheritStyle}>
         <Grid item md={6} className={classes.imgContainer}>
@@ -104,7 +107,7 @@ const TemplateDialog = ({id, open, handleClose, handleSave, handleUser}) => {
               {template.title}
             </Typography>
             <Typography variant="subtitle1" color='secondary' style={{textTransform: 'capitalize'}}>
-              {templateData[template.templateType]}
+              {templateTypeData[template.templateType]}
             </Typography>
           </div>
             <Typography variant="h5" color="secondary">

@@ -1,10 +1,11 @@
+//Main data structrures for Template
 export interface Template {
   id?: string,
   name: string,
   templateType: number,
   accountId?: string,
-  dataJson?: string,
-  dataHtml?: string,
+  dataJson?: string | null,
+  dataHtml?: string | null,
   createdOn?: {
     seconds:number,
     nanoseconds: number
@@ -15,6 +16,11 @@ export interface Template {
   } | Date
 }
 
+export interface StoredTemplate extends Template{
+  id: string
+}
+
+//Create Template 
 export interface CreateTemplateForm{
   name: string,
   templateType: number,
@@ -22,13 +28,26 @@ export interface CreateTemplateForm{
   dataJson?: string
 }
 
-export interface StoredTemplate extends Template{
-  id: string
+//EditorTemplateData
+export interface EditorTemplateData {
+  id: string,
+  name: string,
+  templateType: number
+  dataJson: string | null,
+  dataHtml: string | null
+}
+
+export interface UpdateTemplate  {
+  dataJson: string | null,
+  dataHtml: string | null
 }
 
 export interface LibraryState{
   isLoading: boolean,
-  list: Template[] | undefined,
-  editorTemplate: Template | null,
-  editorIsLoading: boolean
+  list: Template[] | undefined
+}
+
+export interface EditorState {
+  isLoading: boolean,
+  template: EditorTemplateData | null,
 }

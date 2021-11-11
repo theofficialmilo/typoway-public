@@ -15,10 +15,7 @@ const useTemplateComponent = (history: History, onMore: CallableFunction) => {
     e.preventDefault();
     let templateId = e.currentTarget.value
     history.push({
-        pathname: '/library/editor',
-        state: {
-          template: templateId
-        }
+        pathname: `/editor/edit/${templateId}`,
     });
   }
 

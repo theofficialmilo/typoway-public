@@ -1,13 +1,12 @@
-import { auth } from '../../utils/firebase'
 import { call, put } from 'redux-saga/effects'
 
 import { setAlertAction } from '../app/appDucks';
 
-import { setEditorLoadingAction, setListAction, setLoadingAction, setTemplateAction } from './libraryDucks'
-import { createTemplate, getDefaultTemplate, getTemplate, getTemplateList } from '../../service/libraryServices'
+import { setListAction, setLoadingAction } from './libraryDucks'
+import { getTemplateList } from '../../service/libraryServices'
 
-import { CreateTemplateForm, StoredTemplate, Template } from '../../interfaces/Library';
-import { FQuerySnapshot, FDocumentSnapshot, FDocumentData } from '../../interfaces/TypeHelper';
+import { StoredTemplate } from '../../interfaces/Library';
+import { FQuerySnapshot } from '../../interfaces/TypeHelper';
 
 export function* handleGetList(action: {type:string, payload: string }) {
   try {
@@ -27,71 +26,6 @@ export function* handleGetList(action: {type:string, payload: string }) {
     yield put(setListAction(data));
     yield put(setLoadingAction(false));
   } catch (error: any) {
-    yield put(setAlertAction({ type: 'error', message: error.message }))
-  }
-}
-
-export function* handleCreateTemplate(action: {type: string, payload: CreateTemplateForm}) {
-  try{
-    yield put(setEditorLoadingAction(true));
-    if(auth.currentUser !== null && auth.currentUser.email !== null){
-      let dataJson = '';
-      if(action.payload.designType === 1){
-        dataJson = yield call(getDefaultTemplate, action.payload.designType.toString())
-      }
-      if(action.payload.dataJson !== undefined){
-        dataJson = action.payload.dataJson
-      }
-      let template: Template = {
-        accountId: auth.currentUser.email,
-        name: action.payload.name,
-        templateType: action.payload.templateType,
-        dataJson: dataJson,
-        dataHtml: '',
-        createdOn: new Date(),
-        updatedOn: new Date()
-      }
-      const response: FDocumentData = yield call(createTemplate, template);
-      template = {
-        ...template,
-        id: response.id
-      }
-      yield put(setTemplateAction(template));
-      yield put(setEditorLoadingAction(false));
-  }
-    //Update Template Id
-  }catch(error: any){
-    yield put(setAlertAction({ type: 'error', message: error.message }))
-  }
-}
-
-export function* handleEditTemplate(action: {type: string, payload: string}) {
-  try{
-    //Set Editor Loading to true
-    
-    //Get template Data from Firebase
-    const response:firebase.default.firestore.QueryDocumentSnapshot = yield call(getTemplate, action.payload)
-    if(response.exists) {
-      const data: FDocumentData = response.data();
-      if(data !== undefined) {
-        const template: Template = {
-          id: response.id,
-          accountId: data.accountId,
-          name: data.name,
-          templateType: data.templateType,
-          dataJson: data.dataJson,
-          dataHtml: data.dataHtml,
-          createdOn: data.createdOn,
-          updatedOn: data.updatedOn
-        }
-        console.log(template);
-        yield put(setTemplateAction(template));
-      }
-    }
-
-    //Set Template into redux state
-    //Set Loading false
-  } catch(error:any) {
     yield put(setAlertAction({ type: 'error', message: error.message }))
   }
 }

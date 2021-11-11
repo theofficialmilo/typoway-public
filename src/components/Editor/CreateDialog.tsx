@@ -1,5 +1,3 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import {
 	Dialog,
 	DialogTitle,
@@ -9,13 +7,11 @@ import {
 	makeStyles
 } from '@material-ui/core'
 
-import { createTemplateAction } from '../../state/library/libraryDucks'
-
 import InfoForm from './CreateForms/InfoForm'
 import DialogStepper from './CreateForms/DialogStepper'
 import FeedbackCard from './CreateForms/FeedbackCard'
 
-import { RootState } from '../../state/store'
+import useCreateDialog from '../../hooks/Editor/useCreateDialog'
 
 //Styling Const
 const useStyles = makeStyles(theme => ({
@@ -26,40 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 const CreateDialogCard = ({ isOpen, handleOnClose }: PropTypes) => {
   const classes = useStyles();
-  const dispatch = useDispatch()
-  const isLoading = useSelector((state: RootState) => state.library.editorIsLoading)
-
-  const [activeStep, setActiveStep] = useState(0);
-  const [formData,setFormData] = useState({
-    templateType: 0,
-    name: 'Untitle Template',
-    designType: 1,
-  })
-
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const { name, value } = e.target
-    name !== 'name' ?
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: parseInt(value)
-      })) :
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: value
-      }))
-  }
-
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    dispatch(createTemplateAction(formData))
-    handleNext();
-
-  }
-
-	const handleNext = () => {
-		setActiveStep((prevActiveStep) => prevActiveStep !== 1 ? prevActiveStep + 1 : prevActiveStep);
-	};
+  const {isReady, formData, activeStep, handleOnChange, handleSubmit} = useCreateDialog();
 
   return (
     <Dialog open={isOpen} maxWidth='md'>
@@ -91,7 +54,7 @@ const CreateDialogCard = ({ isOpen, handleOnClose }: PropTypes) => {
             }
 						{activeStep === 1 && 
               <FeedbackCard 
-                loading={isLoading} 
+                isReady={isReady} 
                 handleOnClose={handleOnClose} 
               />
             }

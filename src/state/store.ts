@@ -8,12 +8,14 @@ import messageReducer from './sendbox/sendboxDucks'
 import userReducer from './user/userDucks'
 import templateReducer from './library/libraryDucks'
 import marketplaceReducer from './marketplace/marketplaceDucks'
+import editorReducer from './editor/editorDucks'
 
 //To consolidate all Reducers
 const reducer = combineReducers({
   app: appReducer,
   user: userReducer,
   sendbox: messageReducer,
+  editor: editorReducer,
   library: templateReducer,
   marketplace: marketplaceReducer
 })

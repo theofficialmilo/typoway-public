@@ -1,6 +1,6 @@
-import { db, auth } from '../utils/firebase';
+import { db } from '../utils/firebase';
 import { FDocumentData } from '../interfaces/TypeHelper';
-import { StoredTemplate, Template } from '../interfaces/Library';
+import { Template } from '../interfaces/Library';
 
 //Get list of templates according to accountId
 export const getTemplateList = (emailId: string) => {
@@ -18,21 +18,8 @@ export const createTemplate = (templateData: Template) => {
 }
 
 //Sends a request to update a template in Firebase 
-export const updateTemplate = (templateData: StoredTemplate) => {
-  const data = {
-    name: templateData.name,
-    dataJson: templateData.dataJson,
-    dataHtml: templateData.dataHtml,
-    updatedOn: new Date()
-  }
-
-  return db.collection('templates').doc(templateData.id).update(data)
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      return error
-    })
+export const updateTemplate = (templateData: Template) => {
+  return db.collection('templates').doc(templateData.id).update(templateData)
 }
 
 //Sends a request to delete a template in Firebase 

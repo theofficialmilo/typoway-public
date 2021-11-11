@@ -6,11 +6,9 @@ export const dialogDeleteData: DialogData = {
   content: 'Are you sure you want to delete the template? \nDeleted template cannot be recovered.'
 }
 
-export const dialogGoBackData: Function = (): DialogData => {
-  return {
-    title: 'Leaving without saving?',
-    content: 'Oops, looks like you did not save your template.\n Are you sure you want to leave without making any changes?'
-  }
+export const dialogGoBackData: DialogData = {
+  title: 'Leaving without saving?',
+  content: 'Oops, looks like you did not save your template.\n Are you sure you want to leave without making any changes?'
 }
 
 export const templateTypeData: Array<string> = ["Email", 'Advertisement', 'Newsletter', 'Signature']

@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 
 import Typography from '@material-ui/core/Typography'
 
-const DialogConfirmation = ({ isOpen, data, handleCancel, handleClick }) => {
+const DialogConfirmation = ({ isOpen, data, handleCancel, handleClick }: PropTypes) => {
   return (
     <Dialog open={isOpen}>
       <DialogTitle >{data.title}</DialogTitle>
@@ -26,3 +26,13 @@ const DialogConfirmation = ({ isOpen, data, handleCancel, handleClick }) => {
 }
 
 export default DialogConfirmation
+
+interface PropTypes{
+  isOpen: boolean,
+  data: {
+    title: React.ReactChildren | string,
+    content: React.ReactChildren | string
+  },
+  handleCancel: React.MouseEventHandler<HTMLButtonElement>,
+  handleClick: React.MouseEventHandler<HTMLButtonElement>
+}

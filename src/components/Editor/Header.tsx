@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Toolbar, Button, Typography, Divider, Box, IconButton } from '@material-ui/core'
 import { ArrowBackIos, SaveAlt } from '@material-ui/icons'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -8,15 +6,13 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import Grow from '@material-ui/core/Grow';
 
 import { templateTypeData } from '../../utils/data';
+import { EditorTemplateData } from '../../interfaces/Library';
 
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     display: 'flex',
     alignItems: 'center'
-  },
-  morebutton: {
-    padding: 0
   },
   divider: {
     backgroundColor: theme.palette.secondary.main,
@@ -31,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Header = ({ loading, handleSave, handleBack, templateData }) => {
+const Header = ({ loading, handleSave, handleBack, templateData }: PropTypes) => {
   const classes = useStyles();
 
   return (
@@ -39,7 +35,6 @@ const Header = ({ loading, handleSave, handleBack, templateData }) => {
       <Box className={classes.title}>
         <IconButton
           onClick={handleBack}
-          className={classes.button}
           size='small'>
           <ArrowBackIos fontSize="small" />
         </IconButton>
@@ -54,7 +49,12 @@ const Header = ({ loading, handleSave, handleBack, templateData }) => {
       <div className={classes.buttonDiv}>
         {!loading &&
           <Grow in={!loading}>
-            <Button onClick={handleSave} startIcon={<SaveAlt />} variant='contained' color='primary'>
+            <Button 
+              onClick={handleSave} 
+              startIcon={<SaveAlt />} 
+              variant='contained' 
+              color='primary'
+            >
               Save Design & Exit
             </Button>
           </Grow>
@@ -65,3 +65,10 @@ const Header = ({ loading, handleSave, handleBack, templateData }) => {
 }
 
 export default Header
+
+interface PropTypes { 
+  loading: boolean, 
+  handleSave: React.MouseEventHandler<HTMLButtonElement>, 
+  handleBack: React.MouseEventHandler<HTMLButtonElement>, 
+  templateData: EditorTemplateData
+}

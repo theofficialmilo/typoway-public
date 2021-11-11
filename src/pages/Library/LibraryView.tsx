@@ -83,7 +83,7 @@ const Library = ({ history }: PropTypes) => {
 					<Fab
 						variant="extended"
 						component={RouterLink}
-						to={"/library/editor"}
+						to={"/editor/create"}
 						color="primary"
 						aria-label="add"
 						className={classes.fab}

@@ -7,10 +7,10 @@ import Header from '../components/App/Header'
 import Sidebar from '../components/App/Sidebar'
 
 import LibraryView from './Library/LibraryView'
-import EditorView from './Library/EditorView'
+import EditorView from './Editor/EditorView'
 import New from './Message/New';
 import Message from './Message/Index';
-import Marketplace from './Marketplace/Index'
+import Marketplace from './Marketplace/MarketplaceView'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +43,7 @@ const Home = () => {
           <Route exact path="/message" render={(props) => <Message {...props} />} />
           <Route exact path="/message/new" render={(props) => <New {...props} />} />
           <Route exact path="/library" render={(props) => <LibraryView {...props} />} />
-          <Route exact path="/library/editor" render={(props) => <EditorView {...props} />} />
+          <Route exact path="/editor/:type/:value?" render={(props) => <EditorView {...props} />} />
         </Switch>
       </main>
     </Box>

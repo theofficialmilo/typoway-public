@@ -17,13 +17,18 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const FeedbackCard = ({loading, handleOnClose} : PropTypes) => {
+const FeedbackCard = ({isReady, handleOnClose} : PropTypes) => {
   const classes = useStyles();
+
+  const handleOnClick = (e:React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    handleOnClose();
+  }
 
   return (
     <>
 		  <Box className={classes.loaderBox}>
-			  {loading ?
+			  {!isReady ?
 				  <>
 					  <CircularProgress size='10rem' thickness={1.5} />
 					  <Typography variant='h6' color='secondary'>Please hold as we are preparing the workspace</Typography>
@@ -38,9 +43,10 @@ const FeedbackCard = ({loading, handleOnClose} : PropTypes) => {
 				  </>
 			  }
 		  </Box>
-      <Button variant='contained' color='primary' onClick={(e) => handleOnClose(e)} fullWidth>
+      {isReady && (<Button variant='contained' color='primary' onClick={(e) => handleOnClick(e)} fullWidth>
 				Start Designing!
-			</Button>
+			</Button>)
+      }
     </>
 	)
 }
@@ -48,6 +54,6 @@ const FeedbackCard = ({loading, handleOnClose} : PropTypes) => {
 export default FeedbackCard
 
 interface PropTypes {
-  loading: boolean,
+  isReady: boolean,
   handleOnClose: CallableFunction,
 }

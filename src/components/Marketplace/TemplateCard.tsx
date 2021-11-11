@@ -22,17 +22,14 @@ const useStyles = makeStyles({
   }
 });
 
-export const TemplateCard = ({id, imgUrl, price, title, userName, templateType, handleOnClick}) => {
+export const TemplateCard = ({id, imgUrl, price, title, userName, templateType, handleOnClick}: PropTypes) => {
   const classes = useStyles();
   const history = useHistory();
   const templateData = templateTypeData;
 
   const handleOnSave = () => {
     history.push({
-      pathname: '/library/editor',
-      state: {
-        store: id
-      }
+      pathname: `/editor/create/${id}`
   });
   }
 
@@ -71,6 +68,16 @@ export const TemplateCard = ({id, imgUrl, price, title, userName, templateType, 
       </CardActions>
     </Card>
   )
+}
+
+interface PropTypes {
+  id: string, 
+  imgUrl: string, 
+  price: number, 
+  title: string,
+  userName: string, 
+  templateType: number, 
+  handleOnClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
 export const SkeletonCard = () => {

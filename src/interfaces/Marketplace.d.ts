@@ -5,7 +5,12 @@ export interface Contributor {
   email?: string,
   description?: string,
   location?: string,
-  socials?: string[]
+  socials?: {
+    linkedin:string,
+    web: string,
+    instagram: string,
+    facebook: string
+  }
 }
 
 export interface Template {
@@ -25,6 +30,7 @@ export interface Template {
 }
 
 export interface MarketplaceState {
+  selectedId: string | null,
   templates: Template[],
   contributors: Contributor[],
   isLoading: boolean

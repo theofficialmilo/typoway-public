@@ -6,24 +6,29 @@ import {
 	FormControl,
 	FormLabel,
 	OutlinedInput,
+  CircularProgress,
   Button
 } from '@material-ui/core'
 
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import useNameDialog from '../../hooks/Library/useNameDialog'
+import useNameDialog from '../../hooks/Editor/useNameDialog'
 
 const useStyles = makeStyles(theme => ({
   nameButton: {
-    marginTop: theme.spacing(4)
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(1)
+  },
+  loader: {
+    color: '#fff'
   }
 }))
 
 const NameDialog = ({ isOpen, templateId, handleOnClose }:PropTypes) => {
   const classes = useStyles();
-  const { formData, handleOnChange, handleSubmit } = useNameDialog(templateId, handleOnClose);
+  const { formData, isLoading, handleOnChange, handleSubmit } = useNameDialog(templateId, handleOnClose);
 
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen} fullWidth maxWidth='xs'>
       <DialogTitle disableTypography>
 				<Typography variant='h6' color='secondary'>Save Template</Typography>
 			</DialogTitle>
@@ -37,8 +42,8 @@ const NameDialog = ({ isOpen, templateId, handleOnClose }:PropTypes) => {
 					  onChange={handleOnChange}
 				  />
 			  </FormControl>
-        <Button variant='contained' color='primary' className={classes.nameButton} onClick={handleSubmit} fullWidth>
-          Save into Library!
+        <Button variant='contained' color='primary' className={classes.nameButton} onClick={handleSubmit} fullWidth disabled={isLoading}>
+          {!isLoading? 'Save into Library!': <CircularProgress className={classes.loader} size={24}/>}
 				</Button>
       </DialogContent>
     </Dialog>
@@ -49,6 +54,6 @@ export default NameDialog
 
 interface PropTypes {
   isOpen: boolean,
-  templateId: string
+  templateId: string | undefined,
   handleOnClose: CallableFunction
 }
